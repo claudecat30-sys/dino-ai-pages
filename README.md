@@ -7,6 +7,7 @@
 | 資料夾 | 內容 | 加入日期 | 網址 |
 |---|---|---|---|
 | `newmath-intro/` | DINO AI 新課綱數學 · 特色介紹(中英文切換、預錄語音) | 2026-11-16 | `https://claudecat30-sys.github.io/dino-ai-pages/newmath-intro/` |
+| `science-intro/` | DINO AI 課綱自然科學小學堂 · 特色說明(中文、預錄語音) | 2026-11-16 | `https://claudecat30-sys.github.io/dino-ai-pages/science-intro/` |
 
 ## 發布設定
 
