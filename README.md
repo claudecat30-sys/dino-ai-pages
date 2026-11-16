@@ -29,7 +29,7 @@
 
 - `index.html`:頁面本體。右上角的按鈕切換中文與英文,也可以用網址參數指定語言:`?lang=zh`、`?lang=en`。
 - `audio/`:224 句預錄語音(mp3)與索引 `index.js`。`index.html` 和 `audio/` 必須在同一層。
-- 語音:中文為 Azure `zh-TW-HsiaoChenNeural`(學生為 `zh-TW-HsiaoYuNeural`),英文為 `en-US-SaraNeural`(學生為 `en-US-AnaNeural`)。找不到音檔的句子會退回瀏覽器內建語音。
+- 語音:中文為 Azure `zh-TW-HsiaoChenNeural`(學生為 `zh-TW-YunJheNeural`,音調加高 18%),英文為 `en-US-SaraNeural`(學生為 `en-US-DustinMultilingualNeural`,音調加高 12%)。找不到音檔的句子會退回瀏覽器內建語音。
 - 頁面沒有對外連結,也不依賴其他網站或儲存庫。
 - iPhone / iPad:頁面會在第一次觸碰畫面時解鎖音訊(頁面裡標記為 `iOS-voice-fix-v2` 的區塊)。**尚未在實機上測試。**
 - 音檔沒有逐句人工試聽。
