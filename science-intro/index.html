@@ -110,16 +110,26 @@ nav .trb{border-color:#8e44ad!important;color:#8e44ad!important}nav .trb.act{bac
 .fstar{position:absolute;z-index:25;font-size:96px;animation:fst 1.4s ease-out forwards;pointer-events:none}@keyframes fst{0%{transform:scale(0) rotate(-90deg);opacity:1}60%{transform:scale(1.3)}100%{transform:scale(1) translateY(-70px);opacity:0}}
 #subband{min-height:180px!important}
 .seq3{display:flex;gap:6px;align-items:center}.seq3 b{font-size:26px;color:#e8590c}
+
+/* 來源頁的樣式衝突：動畫用的 .chips{position:absolute} 也套到標題下方的標籤列，害它被分頁列蓋住。這裡還原成一般排版 */
+header .chips{position:static}
+/* 語言切換按鈕 */
+nav{flex-wrap:wrap}
+nav .lgb{border-color:#2f80ed!important;color:#2f80ed!important}
+#bar .lgb2{background:#1c6dd0}
+#dots{min-width:20px}
+@media(max-width:560px){#bar{gap:4px!important;padding:0 5px!important}#bar .b{padding:5px 7px!important;font-size:12px!important}#dots{gap:2px}}
+@media(max-width:400px){#bar{gap:3px!important;padding:0 4px!important}#bar .b{padding:5px 5px!important;font-size:11px!important}}
 </style>
 </head>
 <body>
 <header id="hdr"></header>
-<nav><button data-p="anim" class="on" id="nA"></button><button data-p="read" id="nR"></button><button id="trB" class="trb" style="display:none"></button></nav>
+<nav><button data-p="anim" class="on" id="nA"></button><button data-p="read" id="nR"></button><button id="trB" class="trb" style="display:none"></button><button id="lgB" class="lgb"></button></nav>
 <main>
 <section class="pane" id="p_read"></section>
 <section class="pane on" id="p_anim">
 <div id="wrap"><div id="st"><div id="board"><img id="bgp"><div id="bTitle"></div><div id="zone"></div><img id="kid"><img id="robot"></div><div id="subband"><div id="sub"></div></div></div></div>
-<div id="bar"><button class="b" onclick="go(cur-1)">⏮</button><button class="b o" id="pl" onclick="tog()">▶ 播放</button><button class="b" onclick="go(cur+1)">⏭</button><button class="b" onclick="go(0,1)">🔁</button><div id="dots"></div><button class="b trb2" id="trB2" style="display:none"></button><button class="b" id="rdB" onclick="showRead()"></button></div>
+<div id="bar"><button class="b" onclick="go(cur-1)">⏮</button><button class="b o" id="pl" onclick="tog()">▶ 播放</button><button class="b" onclick="go(cur+1)">⏭</button><button class="b" onclick="go(0,1)">🔁</button><div id="dots"></div><button class="b trb2" id="trB2" style="display:none"></button><button class="b lgb2" id="lgB2"></button><button class="b" id="rdB" onclick="showRead()"></button></div>
 </section>
 </main>
 <script>
@@ -136,8 +146,8 @@ let _clip=null;
 (function(){const SIL='data:audio/wav;base64,UklGRkQDAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YSADAACAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgA==';
  const unlock=()=>{if(_vEl.ok||_clip)return;try{const el=_vEl();el.src=SIL;const p=el.play();if(p&&p.then)p.then(()=>{_vEl.ok=true},()=>{})}catch(e){}};
  ['touchend','pointerup','click','keydown'].forEach(e=>document.addEventListener(e,unlock,true));})();
-/* 預錄音檔：索引鍵 zh|角色|頁面原文（t＝DINO老師與閱讀版、s＝小明）。查不到或播放失敗才退回內建語音 */
-function AUD(who,t){return (window.INTRO_AUDIO||{})['zh|'+who+'|'+String(t).replace(/<[^>]+>/g,'').trim()]||null}
+/* 預錄音檔：索引鍵 語言|角色|頁面原文（t＝DINO老師與閱讀版、s＝小明）。查不到或播放失敗才退回內建語音 */
+function AUD(lang,who,t){return (window.INTRO_AUDIO||{})[lang+'|'+who+'|'+String(t).replace(/<[^>]+>/g,'').trim()]||null}
 function playClip(f,onProg){return new Promise(res=>{const a=_vEl();let done=false;const fin=ok=>{if(done)return;done=true;a.onended=a.onerror=a.ontimeupdate=null;if(_clip===fin)_clip=null;res(ok)};_clip=fin;a.onended=()=>fin(true);a.onerror=()=>fin(false);if(onProg)a.ontimeupdate=()=>{if(a.duration)onProg(a.currentTime/a.duration)};try{a.src='audio/'+f;const p=a.play();if(p&&p.then)p.then(()=>{_vEl.ok=true},()=>fin(false))}catch(e){fin(false)}})}
 const SS=window.speechSynthesis;let VZ=null,VE=null;
 function lv(){if(!SS)return;const v=SS.getVoices();VZ=ZHV==='s'?(v.find(x=>/zh[-_]CN/i.test(x.lang))||v.find(x=>/zh/i.test(x.lang))):(v.find(x=>/zh[-_]TW/i.test(x.lang))||v.find(x=>/zh/i.test(x.lang)));VE=v.find(x=>/en[-_]US/i.test(x.lang))||v.find(x=>/^en/i.test(x.lang))||null}
@@ -146,7 +156,7 @@ const FIX=ZHV==='t'?[['和','汗']]:[];
 let TK=0;
 function stop(){TK++;if(_clip){const f=_clip;try{_vEl().pause()}catch(e){}f(true)}try{SS&&SS.cancel()}catch(e){}}
 function prime(){try{if(!SS)return;const u=new SpeechSynthesisUtterance(' ');u.volume=0;u.lang=EN?'en-US':(ZHV==='s'?'zh-CN':'zh-TW');SS.speak(u)}catch(e){}}
-function say(t,o={}){const lang=o.lang||(EN?'en':'zh');const f=lang==='zh'&&!window.TEST_FAST?AUD(o.who||'t',t):null;if(f)return playClip(f).then(ok=>ok?undefined:say0(t,o));return say0(t,o)}
+function say(t,o={}){const lang=o.lang||(EN?'en':'zh');const f=!window.TEST_FAST?AUD(lang,o.who||'t',t):null;if(f)return playClip(f).then(ok=>ok?undefined:say0(t,o));return say0(t,o)}
 function say0(t,o={}){const lang=o.lang||(EN?'en':'zh');const V=lang==='en'?VE:VZ;return new Promise(r=>{t=String(t).replace(/<[^>]+>/g,'');if(lang==='zh')for(const [a,b] of FIX)t=t.split(a).join(b);t=t.replace(/(\d)～(\d)/g,lang==='en'?'$1 to $2':'$1至$2');const est=(lang==='en'?t.length*75:t.length*260)/(o.rate||1)+700;let d=0,started=0,tm=0,t2=0;const f=()=>{if(!d){d=1;clearTimeout(tm);clearTimeout(t2);r()}};
  if(window.TEST_FAST){setTimeout(f,40);return}
  if(!SS){tm=setTimeout(f,est);return}
@@ -407,7 +417,7 @@ const wait=ms=>new Promise(r=>setTimeout(r,window.TEST_FAST?10:ms));
 async function playScene(i,run){show(i);await wait(1100);for(const [w,tz0,te,h] of SC[i].L){if(run!==RUN)return;const t=EN?te:tz0;const who=w==='s'?X('小明','Xiao Ming'):X('DINO老師','Teacher DINO');
  if(h!=null)hi(h);const spk=w==='s'?$('#kid'):$('#robot');spk.classList.add('talk');
  const cs=chunks(t);const setS=c=>{$('#sub').innerHTML=`<small>${who}</small>${esc(c)}${EN?`<span id="subTr">${esc(tz0)}</span>`:''}`};
- const fL=!EN&&!window.TEST_FAST?AUD(w,t):null;let okL=false;
+ const fL=!window.TEST_FAST?AUD(EN?'en':'zh',w,t):null;let okL=false;
  if(fL){const tot=cs.reduce((n,c)=>n+c.length,0);let acc=0;const ends=cs.map(c=>(acc+=c.length)/tot);let ci=-1;const upd=p=>{let k=ends.findIndex(e=>p<e);if(k<0)k=cs.length-1;if(k!==ci){ci=k;setS(cs[k])}};upd(0);okL=await playClip(fL,upd);if(run!==RUN){spk.classList.remove('talk');return}}
  if(!okL)for(const c of cs){if(run!==RUN){spk.classList.remove('talk');return}setS(c);await say0(c,w==='s'?{pitch:1.35,rate:.98}:{pitch:.85,rate:.9})}
  spk.classList.remove('talk');await wait(550)}
@@ -425,6 +435,14 @@ $('#hdr').innerHTML=`<h1>${X('DINO AI 課綱自然科學小學堂','DINO AI Scie
 $('#nA').textContent=X('🎬 動畫版','🎬 Animated');$('#nR').textContent=X('📖 閱讀版','📖 Read');$('#rdB').textContent=X('📖 閱讀版','📖 Read');$('#pl').textContent=X('▶ 播放','▶ Play');
 if(EN){document.body.classList.add('allEn');const L=ZHV==='s'?'中文翻译':'中文翻譯';const upd=()=>{const on=!document.body.classList.contains('allEn');[$('#trB'),$('#trB2')].forEach(b=>{b.classList.toggle('act',on);b.textContent=(b.id==='trB2'?'🌐 '+(on?'ON':'OFF'):'🌐 '+L+(on?' ON':' OFF'))})};[$('#trB'),$('#trB2')].forEach(b=>{b.style.display='';b.onclick=()=>{document.body.classList.toggle('allEn');upd()}});upd()}
 $('#kid').src=I('c_boy');$('#robot').src=I('c_robot');buildRead();SC.forEach((_,i)=>{const d=document.createElement('i');d.onclick=()=>go(i);$('#dots').appendChild(d)});show(0);fit();
+
+// ---------- 語言切換（中文頁 index.html ↔ 英文頁 en.html；帶著目前的分頁與幕次過去） ----------
+(function(){const other=EN?'index.html':'en.html';
+ const to=()=>{try{pause()}catch(e){}const rd=document.querySelector('#p_read').classList.contains('on');location.href=other+'#'+(rd?'read':'s'+cur)};
+ const a=$('#lgB'),b=$('#lgB2');a.textContent=EN?'🌐 中文版':'🌐 English';b.textContent=EN?'🌐 中文':'🌐 EN';
+ [a,b].forEach(x=>{x.title=EN?'切換為中文版':'Switch to English';x.setAttribute('aria-label',x.title);x.onclick=to});
+ const h=location.hash.slice(1);if(h==='read')showRead();else{const m=/^s(\d+)$/.exec(h);if(m&&+m[1]>0){cur=Math.min(SC.length-1,+m[1]);show(cur);fit()}}
+})();
 </script>
 </body>
 </html>

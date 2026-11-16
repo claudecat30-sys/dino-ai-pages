@@ -7,7 +7,7 @@
 | 資料夾 | 內容 | 加入日期 | 網址 |
 |---|---|---|---|
 | `newmath-intro/` | DINO AI 新課綱數學 · 特色介紹(中英文切換、預錄語音) | 2026-11-16 | `https://claudecat30-sys.github.io/dino-ai-pages/newmath-intro/` |
-| `science-intro/` | DINO AI 課綱自然科學小學堂 · 特色說明(中文、預錄語音) | 2026-11-16 | `https://claudecat30-sys.github.io/dino-ai-pages/science-intro/` |
+| `science-intro/` | DINO AI 課綱自然科學小學堂 · 特色說明(中英文切換、預錄語音) | 2026-11-16 | `https://claudecat30-sys.github.io/dino-ai-pages/science-intro/` |
 
 ## 發布設定
 
@@ -37,9 +37,10 @@
 
 ## science-intro
 
-- `index.html`:頁面本體,只有中文。分「動畫版」與「閱讀版」兩個分頁。
-- `audio/`:93 句預錄語音(mp3)與索引 `index.js`。`index.html` 和 `audio/` 必須在同一層。
-- 語音:DINO 老師與閱讀版朗讀為 Azure `zh-TW-HsiaoChenNeural`,小明為 `zh-TW-YunJheNeural`(語速加快 4%、音調加高 18%)。找不到音檔的句子會退回瀏覽器內建語音。
+- `index.html`:中文頁。`en.html`:英文頁(網址 `.../science-intro/en.html`)。兩頁各分「動畫版」與「閱讀版」兩個分頁。
+- 語言切換:動畫版在底部控制列、閱讀版在上方分頁按鈕列各有一個切換按鈕,連到另一個語言的頁面,並帶著目前的分頁與幕次(網址後面的 `#read`、`#s5`)。兩個檔名不要改,否則按鈕會失效。
+- `audio/`:186 句預錄語音(mp3,中文 93、英文 93)與索引 `index.js`,兩頁共用。兩個 html 和 `audio/` 必須在同一層。
+- 語音:中文的 DINO 老師與閱讀版朗讀為 Azure `zh-TW-HsiaoChenNeural`,小明為 `zh-TW-YunJheNeural`(語速加快 4%、音調加高 18%);英文為 `en-US-SaraNeural`(語速放慢 20%),小明為 `en-US-DustinMultilingualNeural`(語速放慢 8%、音調加高 12%)。英文頁的「中文翻譯」朗讀沿用中文音檔。找不到音檔的句子會退回瀏覽器內建語音。
 - 動畫版每句對話是一個完整音檔,字幕依播放進度換段。
 - 頁面沒有對外連結,也不依賴其他網站或儲存庫。
 - iPhone / iPad:頁面會在第一次觸碰畫面時解鎖音訊(頁面裡標記為 `iOS-voice-fix-v2` 的區塊)。**尚未在實機上測試。**
