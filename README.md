@@ -8,6 +8,8 @@
 |---|---|---|---|
 | `newmath-intro/` | DINO AI 新課綱數學 · 特色介紹(中英文切換、預錄語音) | 2026-11-16 | `https://claudecat30-sys.github.io/dino-ai-pages/newmath-intro/` |
 | `science-intro/` | DINO AI 課綱自然科學小學堂 · 特色說明(中英文切換、預錄語音) | 2026-11-16 | `https://claudecat30-sys.github.io/dino-ai-pages/science-intro/` |
+| `zhuyin-intro/` | 迪諾玩注音看世界(中英雙語版) · 功能介紹(繁體、台灣讀音、預錄語音) | 2026-11-17 | `https://claudecat30-sys.github.io/dino-ai-pages/zhuyin-intro/` |
+| `pinyin-intro/` | 迪诺玩拼音看世界(中英双语版) · 功能介绍(簡體、大陸讀音、預錄語音) | 2026-11-17 | `https://claudecat30-sys.github.io/dino-ai-pages/pinyin-intro/` |
 
 ## 發布設定
 
@@ -45,3 +47,15 @@
 - 頁面沒有對外連結,也不依賴其他網站或儲存庫。
 - iPhone / iPad:頁面會在第一次觸碰畫面時解鎖音訊(頁面裡標記為 `iOS-voice-fix-v2` 的區塊)。**尚未在實機上測試。**
 - 音檔沒有逐句人工試聽。
+
+## zhuyin-intro、pinyin-intro
+
+- 各只有一個檔案 `index.html`:圖片與語音全部內嵌(每個約 17 MB),沒有 `audio/` 資料夾。兩個資料夾互不相依。
+- 每頁分「閱讀版」與「動畫版」兩個分頁,右上角切換。閱讀版點說明文字或對話就會朗讀,再點一次停止。
+- 語音:每頁 123 段預錄 mp3(標題 18、對話 87、說明 18),全部用 Azure 語音服務預先錄好。`zhuyin-intro` 為 `zh-TW-HsiaoChenNeural`(台灣讀音),`pinyin-intro` 為 `zh-CN-XiaoxiaoNeural`(大陸讀音);迪諾老師用原音高,小安用同一個聲音把音高調高 15 個百分點。
+- **頁面不使用瀏覽器內建語音**:錄音放不出來時只會無聲地照時間往下走。
+- 動畫版一個人講的一整段是一個音檔,字幕依播放進度換行。
+- 多音字逐處指定讀音(注音版依《國語一字多音審訂表》按當下用法判斷);注音符號與拼音字母照畫面顯示、錄音唸對應的音。
+- 頁面沒有對外連結,也不依賴其他網站或儲存庫。
+- iPhone / iPad:頁面會在第一次觸碰畫面時解鎖音訊。**尚未在實機上測試。**
+- 語音由使用者試聽過兩版(2026-11-17)。
