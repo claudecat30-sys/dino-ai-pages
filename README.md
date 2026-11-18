@@ -10,6 +10,7 @@
 | `science-intro/` | DINO AI 課綱自然科學小學堂 · 特色說明(中英文切換、預錄語音) | 2026-11-16 | `https://claudecat30-sys.github.io/dino-ai-pages/science-intro/` |
 | `zhuyin-intro/` | 迪諾玩注音看世界(中英雙語版) · 功能介紹(繁體、台灣讀音、預錄語音) | 2026-11-17 | `https://claudecat30-sys.github.io/dino-ai-pages/zhuyin-intro/` |
 | `pinyin-intro/` | 迪诺玩拼音看世界(中英双语版) · 功能介绍(簡體、大陸讀音、預錄語音) | 2026-11-17 | `https://claudecat30-sys.github.io/dino-ai-pages/pinyin-intro/` |
+| `basic-geometry-intro/` | DINO AI 數學 · 基礎幾何 · 功能介紹(繁體 `index.html`、简体 `cn.html`,預錄語音) | 2026-11-18 | `https://claudecat30-sys.github.io/dino-ai-pages/basic-geometry-intro/` |
 
 ## 發布設定
 
@@ -61,3 +62,13 @@
 - 頁面沒有對外連結,也不依賴其他網站或儲存庫。
 - iPhone / iPad:頁面會在第一次觸碰畫面時解鎖音訊。**尚未在實機上測試。**
 - 語音由使用者試聽過兩版(2026-11-17)。
+
+## basic-geometry-intro
+
+- `index.html`:繁體中文頁。`cn.html`:简体中文頁(網址 `.../basic-geometry-intro/cn.html`)。這兩頁沒有英文版,也不用登入。
+- `audio/`:預錄語音 282 個音檔(`tw` 台灣讀音、`cn` 大陸讀音)與索引 `index_tw.js`、`index_cn.js`。頁面和 `audio/` 必須在同一層。
+- 語音:台灣老師 Azure `zh-TW-HsiaoChenNeural`(速度 -10%、音調 +3%)、學生 `zh-TW-YunJheNeural`(音調 +18%);大陸老師 `zh-CN-XiaoxiaoNeural`(速度 -10%)、學生 `zh-CN-YunxiaNeural`。只播預錄音檔,找不到音檔的句子不會出聲,不會退回瀏覽器內建語音。
+- 简体頁的用語已改成大陸習慣說法。
+- 課程本體在另一個儲存庫:`https://github.com/claudecat30-sys/basic-geometry`。
+- iPhone / iPad:第一次觸碰畫面時解鎖音訊。**尚未在實機上測試。**
+- 音檔沒有逐句人工試聽。
