@@ -40,6 +40,20 @@
 
 ## science-intro
 
+### 連結
+
+| 用途 | 連結 |
+|---|---|
+| 中文頁(線上觀看) | https://claudecat30-sys.github.io/dino-ai-pages/science-intro/ |
+| 英文頁(線上觀看) | https://claudecat30-sys.github.io/dino-ai-pages/science-intro/en.html |
+| 中文頁,直接開閱讀版 | https://claudecat30-sys.github.io/dino-ai-pages/science-intro/#read |
+| 英文頁,直接開閱讀版 | https://claudecat30-sys.github.io/dino-ai-pages/science-intro/en.html#read |
+| 檔案清單(在 GitHub 上瀏覽) | https://github.com/claudecat30-sys/dino-ai-pages/tree/main/science-intro |
+| 下載(整個儲存庫的 ZIP,約 58 MB) | https://github.com/claudecat30-sys/dino-ai-pages/archive/refs/heads/main.zip |
+| 儲存庫首頁 | https://github.com/claudecat30-sys/dino-ai-pages |
+
+下載說明:GitHub 沒有只下載單一資料夾的官方連結,ZIP 會包含這個儲存庫的所有頁面。解壓縮後取出 `science-intro` 資料夾即可,裡面的 `index.html`、`en.html`、`audio/` 要保持在同一層。用 git 的人可以執行 `git clone https://github.com/claudecat30-sys/dino-ai-pages.git`。
+
 - `index.html`:中文頁。`en.html`:英文頁(網址 `.../science-intro/en.html`)。兩頁各分「動畫版」與「閱讀版」兩個分頁。
 - 語言切換:動畫版在底部控制列、閱讀版在上方分頁按鈕列各有一個切換按鈕,連到另一個語言的頁面,並帶著目前的分頁與幕次(網址後面的 `#read`、`#s5`)。兩個檔名不要改,否則按鈕會失效。
 - `audio/`:186 句預錄語音(mp3,中文 93、英文 93)與索引 `index.js`,兩頁共用。兩個 html 和 `audio/` 必須在同一層。
