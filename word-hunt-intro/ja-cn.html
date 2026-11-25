@@ -110,25 +110,16 @@ const $=id=>document.getElementById(id);
 const ZH=U.lang!=="en-US",JA=U.lang==="ja-JP";
 const SCENE={I01:["I01","I02"],I07:["I07","I07"],I08:["I08","I08"],I11:["I11","I11"],SBS:null,DEV:null};
 /* ---------- speech ---------- */
-let VO=null,VT=null;function pk(lang){const v=speechSynthesis.getVoices();const re=lang==="zh-TW"?/zh[-_](TW|HK)/i:lang==="zh-CN"?/zh[-_]CN/i:lang==="ja-JP"?/ja[-_]JP/i:/en[-_]US/i;const lg=lang.slice(0,2);
- return v.find(x=>re.test(x.lang)&&/Google|Microsoft|Mei-Jia|Ting-Ting|Samantha|Yating|Xiaoxiao|HsiaoChen|Kyoko|Nanami|Haruka|Otoya/i.test(x.name))||v.find(x=>re.test(x.lang))||v.find(x=>x.lang.startsWith(lg))||null}
-function lv(){VO=pk(U.lang);VT=pk(U.tlang)}
-try{lv();speechSynthesis.onvoiceschanged=lv}catch(e){}
 /* ---------- 預錄語音 ---------- */
 const AEL=new Audio();let acur=null;AEL.preload="auto";
 const PRE=new Set();function preSeg(n){const sg=SEGS[n];if(!sg||PRE.has(n))return;PRE.add(n);[[U.lang,"N",sg.t]].concat(sg.lines.map(l=>[U.lang,l.w,l.t])).forEach(k=>{const u=AUD[k.join("|")];if(u)try{fetch(u).catch(()=>{})}catch(e){}})}
-function stopAll(){try{speechSynthesis.cancel()}catch(e){}if(acur){const f=acur;acur=null;try{AEL.pause()}catch(e){}f()}}
+function stopAll(){if(acur){const f=acur;acur=null;try{AEL.pause()}catch(e){}f()}}
 function playA(b){return new Promise(res=>{let done=false;const fin=()=>{if(done)return;done=true;if(acur===fin)acur=null;res()};
  if(acur){const f=acur;acur=null;f()}acur=fin;AEL.onended=fin;AEL.onerror=fin;AEL.src=b;
  try{const p=AEL.play();if(p&&p.catch)p.catch(e=>{if(e&&e.name==="AbortError")return;fin()})}catch(e){fin()}})}
-function ttsSay(t,lang,voice,rate,pitch,est){return new Promise(res=>{let done=false;const fin=()=>{if(!done){done=true;clearTimeout(tm);res()}};const tm=setTimeout(fin,est*1.6+1500);
- console.warn("[預錄語音] 沒有音檔："+t);
- try{const u=new SpeechSynthesisUtterance(t);u.lang=lang;if(voice)u.voice=voice;u.rate=rate;u.pitch=pitch;u.onend=fin;u.onerror=fin;speechSynthesis.speak(u)}catch(e){setTimeout(fin,est)}})}
-function sayT(t,who){stopAll();const a=AUD[U.tlang+"|"+(who||"N")+"|"+t];if(a)return playA(a);
- return ttsSay(t,U.tlang,VT,U.tlang==="en-US"?.92:.9,1,t.length*(U.tlang==="en-US"?72:260)+700)}
-function say(t,who){const a=AUD[U.lang+"|"+who+"|"+t];if(a)return playA(a);
- const est=(ZH?t.replace(/[，。！？、；：「」…—\s]/g,"").length*260:t.length*72)+700;
- return ttsSay(t,U.lang,VO,ZH?(who==="L"?.98:.92):(who==="L"?.98:.94),who==="L"?1.35:who==="B"?1.15:who==="N"?1:.92,est)}
+function quiet(t,ms){console.warn("[預錄語音] 沒有音檔："+t);return new Promise(r=>setTimeout(r,ms))}
+function sayT(t,who){stopAll();const a=AUD[U.tlang+"|"+(who||"N")+"|"+t];return a?playA(a):quiet(t,t.length*(U.tlang==="en-US"?72:260)+700)}
+function say(t,who){const a=AUD[U.lang+"|"+who+"|"+t];return a?playA(a):quiet(t,(ZH?t.length*260:t.length*72)+700)}
 function chunks(t){const parts=JA?t.match(/[^、。！？…]+[、。！？…」』]*/g)||[t]:ZH?t.match(/[^，。！？；：…]+[，。！？；：…」』]*/g)||[t]:t.match(/(?:[^,.!?;:]|,(?=[0-9]))+[,.!?;:]*["”]?/g)||[t];
  const out=[];const MX=JA?26:ZH?20:72;let cur="";for(let p of parts){p=p.trim();if(!p)continue;if(cur&&(cur+p).length>MX){out.push(cur);cur=p}else cur=cur?(ZH?cur+p:cur+" "+p):p}if(cur)out.push(cur);return out}
 /* ---------- layout ---------- */
@@ -172,7 +163,7 @@ async function playFrom(i){const id=++run;idle=false;ended=false;stopAll();pause
  if(id!==run)return;$("sub").innerHTML=`<b class="B">${U.B}</b>${U.end}`;setScene("I08");say(U.end,"B");idle=true;ended=true;
  $("start").style.display="flex";$("start").style.backgroundImage=`url(${IMG.I08})`;$("go").textContent="⟲ "+U.again}
 $("go").onclick=()=>{started=true;$("start").style.display="none";playFrom(0)};
-$("bPlay").onclick=()=>{if(started&&idle&&!ended){playFrom(si);return}paused=!paused;$("bPlay").textContent=paused?"▶":"⏸";try{paused?speechSynthesis.pause():speechSynthesis.resume()}catch(e){}try{if(acur){if(paused)AEL.pause();else{const p=AEL.play();if(p&&p.catch)p.catch(()=>{})}}}catch(e){}};
+$("bPlay").onclick=()=>{if(started&&idle&&!ended){playFrom(si);return}paused=!paused;$("bPlay").textContent=paused?"▶":"⏸";try{if(acur){if(paused)AEL.pause();else{const p=AEL.play();if(p&&p.catch)p.catch(()=>{})}}}catch(e){}};
 $("bNext").onclick=()=>{if(si<SEGS.length-1)playFrom(si+1)};$("bPrev").onclick=()=>playFrom(Math.max(0,si-1));
 /* ---------- reading ---------- */
 function buildRead(){let h=`<div class="rhead" style="background-image:url(${IMG.I01})"><h1>${U.title}</h1><h2>${U.sub}</h2></div><div class="rbar"><button class="big" id="toAnim">▶ ${U.anim}</button><button class="big pk" id="trR">${U.trl}</button></div>`;
