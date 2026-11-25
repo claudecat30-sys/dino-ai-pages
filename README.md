@@ -11,6 +11,7 @@
 | `zhuyin-intro/` | 迪諾玩注音看世界(中英雙語版) · 功能介紹(繁體、台灣讀音、預錄語音) | 2026-11-17 | `https://claudecat30-sys.github.io/dino-ai-pages/zhuyin-intro/` |
 | `pinyin-intro/` | 迪诺玩拼音看世界(中英双语版) · 功能介绍(簡體、大陸讀音、預錄語音) | 2026-11-17 | `https://claudecat30-sys.github.io/dino-ai-pages/pinyin-intro/` |
 | `basic-geometry-intro/` | DINO AI 數學 · 基礎幾何 · 功能介紹(繁體 `index.html`、简体 `cn.html`,預錄語音) | 2026-11-18 | `https://claudecat30-sys.github.io/dino-ai-pages/basic-geometry-intro/` |
+| `word-hunt-intro/` | 迪諾文字大尋寶 · 特色介紹(繁體、简体、英文、日文共六頁,預錄語音) | 2026-11-25 | `https://claudecat30-sys.github.io/dino-ai-pages/word-hunt-intro/` |
 
 ## 發布設定
 
@@ -86,3 +87,37 @@
 - 課程本體在另一個儲存庫:`https://github.com/claudecat30-sys/basic-geometry`。
 - iPhone / iPad:第一次觸碰畫面時解鎖音訊。**尚未在實機上測試。**
 - 音檔沒有逐句人工試聽。
+
+## word-hunt-intro
+
+### 連結
+
+| 頁面語言(翻譯語言) | 檔案 | 線上觀看 |
+|---|---|---|
+| 繁體中文(英文翻譯) | `index.html` | https://claudecat30-sys.github.io/dino-ai-pages/word-hunt-intro/ |
+| 简体中文(英文翻譯) | `cn.html` | https://claudecat30-sys.github.io/dino-ai-pages/word-hunt-intro/cn.html |
+| 英文(繁體中文翻譯) | `en.html` | https://claudecat30-sys.github.io/dino-ai-pages/word-hunt-intro/en.html |
+| 英文(简体中文翻譯) | `en-cn.html` | https://claudecat30-sys.github.io/dino-ai-pages/word-hunt-intro/en-cn.html |
+| 日文(繁體中文翻譯) | `ja.html` | https://claudecat30-sys.github.io/dino-ai-pages/word-hunt-intro/ja.html |
+| 日文(简体中文翻譯) | `ja-cn.html` | https://claudecat30-sys.github.io/dino-ai-pages/word-hunt-intro/ja-cn.html |
+
+每個網址後面加 `#read` 會直接開閱讀版。
+
+- 六個頁面介紹的是「迪諾文字大尋寶」四個版本:繁體英文、簡體英文、繁體日文、簡體日文。繁體版 3,814 字、簡體版 3,691 字,所以繁體頁面寫「三千八百多個字」、簡體頁面寫「三千六百多個字」。
+- 每頁分「動畫版」與「閱讀版」,可以開關翻譯字幕。六頁之間沒有互相連結的按鈕,檔名不要改,否則已發出去的連結會失效。
+- `img/`:170 張圖片(約 14 MB)。`audio/`:507 個預錄語音 mp3(約 18.5 MB)。檔名是內容的雜湊值,六頁共用,由專案的輸出工具產生,不要手動改名。六個 html 和 `img/`、`audio/` 必須在同一層。
+- 語音全部用 Azure 語音服務預先錄好。段落標題是旁白,用女老師的聲音;莉莉、迪諾的台詞用角色的聲音:
+
+  | 語言 | 旁白 | 莉莉 | 迪諾 |
+  |---|---|---|---|
+  | 繁體中文(台灣讀音) | `zh-TW-HsiaoChenNeural`(速度 -10%、音調 +3%) | `zh-TW-HsiaoYuNeural`(-6%) | `zh-TW-YunJheNeural`(-6%) |
+  | 简体中文(大陸讀音) | `zh-CN-XiaoxiaoNeural`(速度 -10%、音調 +3%) | `zh-CN-XiaoshuangNeural`(-6%) | `zh-CN-YunxiaNeural`(-6%) |
+  | 英文 | `en-US-AmberNeural`(-5%) | `en-US-AnaNeural`(-5%) | `en-US-BrandonNeural`(-5%) |
+  | 日文 | `ja-JP-NanamiNeural`(-10%) | `ja-JP-AoiNeural`(-8%) | `ja-JP-KeitaNeural`(-8%) |
+
+- 動畫版每句台詞是一個完整音檔,字幕依播放進度換段。翻譯字幕旁的喇叭會用翻譯語言唸那一句。
+- 多音字指定讀音:繁體依《國語一字多音審訂表》與課程已審訂的注音(連接詞「和」唸 ㄏㄢˋ),簡體依課程已審訂的拼音。日文容易唸錯的漢字改成假名後錄音,畫面文字不變。
+- 找不到音檔的句子會退回瀏覽器內建語音(正常情況下每一句都有音檔)。
+- 頁面沒有對外連結,也不依賴其他網站或儲存庫。
+- iPhone / iPad:**尚未在實機上測試。**
+- 音檔沒有逐句人工試聽;句尾一聲下墜沒有量測。
