@@ -134,10 +134,12 @@ function layout(){const W=innerWidth,H=innerHeight;LAND=W>=H;const ar=LAND?16/9:
  if(LAND){Object.assign(L,{left:"2%",height:"46%",bottom:"5%"});Object.assign(Dd,{left:"19%",height:"48%",bottom:"4%"})}else{Object.assign(L,{left:"4%",height:"25%",bottom:"3%"});Object.assign(Dd,{left:"50%",height:"26%",bottom:"2.5%"})}
  const s=$("sub").style;const fs=(LAND?h*0.052:w*0.062);s.fontSize=fs+"px";
  if(LAND)Object.assign(s,{left:"37%",right:"2%",top:"auto",bottom:"7%"});else Object.assign(s,{left:"4%",right:"4%",top:"55%",bottom:"auto"});
- $("ttl").style.fontSize=(LAND?h*0.042:w*0.05)+"px";fitTtl();
+ $("ttl").style.fontSize=(LAND?h*0.042:w*0.05)+"px";fitTtl();fitSub();
  if(!started)$("start").style.backgroundImage=`url(${IMG[LAND?"I01":"I02"]})`;
  setScene(curScene)}
 addEventListener("resize",layout);
+const SUBMIN=0.6;function fitSub(){const s=$("sub"),st=$("stage"),H=st.clientHeight,W=st.clientWidth;if(!H)return;const base=LAND?H*0.052:W*0.062;let lim;if(LAND){const cb=H-$("ctl").offsetTop+H*0.012;s.style.bottom=cb+"px";lim=H-cb-H*0.70}else{s.style.top="53.4%";lim=H*(0.715-0.534)}let k=1;s.style.fontSize=base+"px";while(s.offsetHeight>lim&&k>SUBMIN+0.001){k=Math.max(SUBMIN,k-0.04);s.style.fontSize=base*k+"px"}}
+new MutationObserver(fitSub).observe($("sub"),{childList:true});
 /* ---------- scenes ---------- */
 let curScene=null;
 function setScene(k){curScene=k;const sc=$("scene");if(k&&SCENE[k]){sc.style.backgroundImage=`url(${IMG[SCENE[k][LAND?0:1]]})`;sc.classList.add("on");$("frame").style.opacity=0;show(false)}else{sc.classList.remove("on");$("frame").style.opacity=1;show(true)}}
@@ -179,7 +181,7 @@ function buildRead(){let h=`<div class="rhead" style="background-image:url(${IMG
 function toRead(){run++;idle=true;stopAll();document.body.classList.add("reading");scrollTo(0,0)}
 $("goRead").onclick=toRead;$("bRead").onclick=toRead;
 $("start").querySelector("h1").innerHTML=U.title;$("start").querySelector("h2").textContent=U.sub;$("go").textContent="▶ "+U.watch;$("goRead").textContent="📖 "+U.read;$("bRead").textContent="📖 "+U.read;
-function togTr(){const on=document.body.classList.toggle("tron");try{localStorage.setItem("dinoTr",on?1:0)}catch(e){}[$("bTr"),$("trR")].forEach(b=>{b.classList.toggle("on",on);b.textContent=(on?"✓ ":"")+U.trl})}
+function togTr(){const on=document.body.classList.toggle("tron");fitSub();try{localStorage.setItem("dinoTr",on?1:0)}catch(e){}[$("bTr"),$("trR")].forEach(b=>{b.classList.toggle("on",on);b.textContent=(on?"✓ ":"")+U.trl})}
 $("bTr").onclick=togTr;
 buildRead();layout();dots();togTr();togTr();
 if(location.hash==="#read")document.body.classList.add("reading");
