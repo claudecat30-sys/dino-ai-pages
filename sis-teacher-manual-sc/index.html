@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="sc">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>See It and Say It 教师手册</title>
+<style>
+:root{--g:#0fa34f;--g2:#087a3a;--g3:#e7f6ec;--y:#ffc531;--y2:#fff4d1;--ink:#1b2a22;--mut:#5d6f65;--bg:#f2f6f3;--card:#fff;--line:#e2ebe5;--fs:16px;--r:18px;--sh:0 6px 20px rgba(20,60,35,.08)}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);font:400 var(--fs)/1.65 -apple-system,BlinkMacSystemFont,"PingFang TC","PingFang SC","Noto Sans TC","Noto Sans SC","Microsoft JhengHei","Microsoft YaHei","Segoe UI",Roboto,sans-serif}
+button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
+a{color:inherit;text-decoration:none}
+#top{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:10px;padding:10px 16px;padding-top:max(10px,env(safe-area-inset-top));background:linear-gradient(120deg,var(--g2),var(--g));color:#fff;box-shadow:0 3px 14px rgba(0,60,25,.25)}
+#top .logo{width:38px;height:38px;border-radius:12px;background:var(--y);color:#0a5a2c;display:grid;place-items:center;font-weight:900;font-size:15px;letter-spacing:-.5px;flex:none;box-shadow:inset 0 -3px 0 rgba(0,0,0,.12)}
+#top .tt{flex:1;min-width:0;line-height:1.2}
+#top .tt b{display:block;font-size:17px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#top .tt small{opacity:.85;font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block}
+.tb{height:36px;min-width:36px;padding:0 10px;border-radius:11px;background:rgba(255,255,255,.16);display:inline-flex;align-items:center;justify-content:center;gap:6px;font-size:14px;font-weight:700;flex:none}
+.tb:active{transform:scale(.96)}
+.tb.on{background:var(--y);color:#0a5a2c}
+#app{max-width:1500px;margin:0 auto}
+/* home */
+.hero{margin:18px 16px 6px;padding:26px 26px 22px;border-radius:26px;background:radial-gradient(120% 140% at 100% 0%,#ffe27a 0%,#ffc531 30%,#13a653 31%,#0a7f3c 100%);color:#fff;position:relative;overflow:hidden;box-shadow:var(--sh)}
+.hero h1{margin:0;font-size:clamp(24px,3.4vw,36px);line-height:1.15;text-shadow:0 2px 8px rgba(0,0,0,.18)}
+.hero p{margin:8px 0 0;opacity:.95;font-size:15px}
+.hero .big{position:absolute;right:22px;bottom:-26px;font-size:120px;font-weight:900;opacity:.14;letter-spacing:-6px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px;padding:16px}
+.lv{position:relative;border-radius:22px;padding:18px 18px 16px;color:#fff;min-height:150px;overflow:hidden;box-shadow:var(--sh);transition:transform .15s;display:flex;flex-direction:column}
+.lv:active{transform:scale(.97)}
+.lv .n{font-size:46px;font-weight:900;line-height:1;letter-spacing:-2px}
+.lv .n small{font-size:18px;letter-spacing:0;margin-left:2px;opacity:.9}
+.lv .l{font-weight:800;font-size:15px;margin-top:6px}
+.lv .ltp{font-size:12.5px;opacity:.92;margin-top:4px;line-height:1.4;flex:1}
+.lv .cv{margin-top:8px;height:6px;border-radius:6px;background:rgba(255,255,255,.3);overflow:hidden}
+.lv .cv i{display:block;height:100%;background:#fff}
+.lv .ct{font-size:11.5px;opacity:.9;margin-top:4px}
+.lv:after{content:"";position:absolute;right:-30px;top:-30px;width:110px;height:110px;border-radius:50%;background:rgba(255,255,255,.14)}
+/* volume layout */
+.vol{display:flex;gap:0;min-height:calc(100vh - 58px)}
+.side{width:290px;flex:none;border-right:1px solid var(--line);background:#fbfdfb;position:sticky;top:58px;height:calc(100vh - 58px);overflow:auto;padding:12px 10px 40px}
+.main{flex:1;min-width:0;padding:16px 18px 80px}
+.side h4{margin:14px 8px 6px;font-size:12.5px;color:var(--mut);letter-spacing:.5px}
+.si{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:12px;font-size:14.5px;line-height:1.3}
+.si:hover{background:var(--g3)}
+.si.on{background:var(--g);color:#fff}
+.si .no{width:30px;height:30px;border-radius:9px;background:var(--g3);color:var(--g2);display:grid;place-items:center;font-weight:800;font-size:13px;flex:none}
+.si.on .no{background:rgba(255,255,255,.25);color:#fff}
+.si .tx{flex:1;min-width:0}
+.si .tx small{display:block;font-size:11.5px;opacity:.75;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dot{width:8px;height:8px;border-radius:50%;flex:none}
+.d-rev{background:#3b82f6}.d-test{background:#ef4444}.d-act{background:#f59e0b}
+@media (max-width:899px){.side{display:none}.vol.list .side{display:block;width:100%;position:static;height:auto;border:0;background:none}.vol.list .main{display:none}}
+.srch{display:flex;gap:8px;margin:4px 4px 8px}
+.srch input{flex:1;min-width:0;height:40px;border-radius:12px;border:1.5px solid var(--line);padding:0 12px;font:inherit;font-size:14.5px;background:#fff}
+.srch input:focus{outline:none;border-color:var(--g)}
+/* overview */
+.vh{border-radius:24px;padding:22px 24px;color:#fff;box-shadow:var(--sh);position:relative;overflow:hidden}
+.vh h2{margin:0;font-size:clamp(22px,3vw,30px)}
+.vh p{margin:6px 0 0;opacity:.92}
+.vh .big{position:absolute;right:20px;top:-14px;font-size:110px;font-weight:900;opacity:.15}
+.cg{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;margin-top:16px}
+.cc{background:var(--card);border-radius:18px;padding:14px 15px;box-shadow:var(--sh);border:1.5px solid transparent;display:flex;flex-direction:column;gap:6px;transition:transform .12s}
+.cc:hover{border-color:var(--g)}
+.cc:active{transform:scale(.98)}
+.cc .h{display:flex;align-items:center;gap:10px}
+.cc .num{width:42px;height:42px;border-radius:13px;background:linear-gradient(135deg,var(--g),var(--g2));color:#fff;display:grid;place-items:center;font-weight:900;font-size:18px;flex:none}
+.cc .ti{font-weight:800;font-size:15.5px;line-height:1.25}
+.cc .ti small{display:block;font-weight:500;color:var(--mut);font-size:12px}
+.cc .tps{font-size:13.5px;color:var(--ink);line-height:1.45}
+.bdg{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:800;padding:2px 9px;border-radius:20px}
+.b-rev{background:#e0edff;color:#1d4ed8}.b-test{background:#fee2e2;color:#b91c1c}.b-act{background:#fef3c7;color:#b45309}
+.min{font-size:12px;color:var(--mut)}
+.sh2{margin:24px 2px 4px;font-size:18px;display:flex;align-items:center;gap:8px}
+.sh2:before{content:"";width:6px;height:22px;border-radius:4px;background:var(--y)}
+.gl{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px;margin-top:10px}
+.gi{background:#fff;border-radius:14px;padding:12px 14px;box-shadow:var(--sh);font-weight:700;display:flex;gap:10px;align-items:center}
+.gi i{font-style:normal;font-size:20px}
+/* class page */
+.ch{background:var(--card);border-radius:24px;box-shadow:var(--sh);padding:18px 20px;display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.ch .num{width:64px;height:64px;border-radius:20px;background:linear-gradient(135deg,var(--g),var(--g2));color:#fff;display:grid;place-items:center;font-weight:900;font-size:28px;flex:none;box-shadow:0 6px 14px rgba(15,163,79,.35)}
+.ch .inf{flex:1;min-width:200px}
+.ch h2{margin:0;font-size:clamp(20px,2.6vw,26px);line-height:1.2}
+.ch .tps{margin-top:6px;display:flex;flex-wrap:wrap;gap:6px}
+.chip{background:var(--y2);color:#7a5600;border-radius:20px;padding:3px 11px;font-size:13px;font-weight:700}
+.nav2{display:flex;gap:8px}
+.nb{height:40px;padding:0 14px;border-radius:12px;background:var(--g3);color:var(--g2);font-weight:800;font-size:14px;display:inline-flex;align-items:center;gap:4px}
+.nb[disabled]{opacity:.35;pointer-events:none}
+.flow{display:flex;gap:4px;overflow-x:auto;margin:14px 0 4px;border-radius:14px;overflow:hidden;background:#fff;box-shadow:var(--sh)}
+.flow button{flex:1 1 0;min-width:86px;padding:9px 8px;font-size:12.5px;line-height:1.25;color:#fff;text-align:left;font-weight:700}
+.flow button small{display:block;font-weight:500;opacity:.9}
+.card{background:var(--card);border-radius:var(--r);box-shadow:var(--sh);margin-top:16px;overflow:hidden}
+.card .hd{display:flex;align-items:center;gap:12px;padding:14px 18px;border-bottom:1px solid var(--line)}
+.card .hd .ic{width:36px;height:36px;border-radius:11px;display:grid;place-items:center;color:#fff;font-weight:900;flex:none}
+.card .hd h3{margin:0;font-size:1.08em;line-height:1.3;flex:1}
+.card .hd h3 small{display:block;font-size:12.5px;color:var(--mut);font-weight:500}
+.tp{background:var(--y);color:#5a4100;border-radius:20px;padding:3px 11px;font-weight:800;font-size:13px;white-space:nowrap;flex:none}
+.bd{padding:12px 18px 16px}
+.goal{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px}
+.gf{background:var(--g3);border-radius:14px;padding:10px 13px}
+.gf .lb{font-size:12.5px;font-weight:800;color:var(--g2);letter-spacing:.3px;margin-bottom:2px}
+.gf .vv{font-size:.95em}
+.gf .vv p{margin:2px 0}
+h4.s3{margin:16px 0 6px;font-size:1em;color:var(--g2);display:flex;align-items:center;gap:8px}
+h4.s3:before{content:"";width:4px;height:16px;border-radius:3px;background:var(--g)}
+.pp{margin:6px 0}
+.li{display:flex;gap:10px;margin:8px 0;align-items:flex-start}
+.li .k{flex:none;min-width:28px;height:24px;padding:0 6px;border-radius:8px;background:var(--g3);color:var(--g2);font-weight:800;font-size:13px;display:grid;place-items:center;margin-top:2px}
+.li .v{flex:1;min-width:0}
+.dl{display:flex;gap:8px;margin:5px 0 5px 4px;align-items:flex-start}
+.dl .sp{flex:none;min-width:34px;padding:1px 7px;border-radius:9px;font-size:12.5px;font-weight:800;text-align:center;margin-top:3px;color:#fff;background:#8b5cf6}
+.dl .sp.t{background:var(--g)}.dl .sp.s{background:#3b82f6}.dl .sp.c{background:#f59e0b}
+.dl .bb{background:#f6f8fb;border:1px solid #e6ebf2;border-radius:4px 14px 14px 14px;padding:5px 12px;font-family:Georgia,"Times New Roman",serif;font-size:1.02em;line-height:1.5}
+.en{display:none;color:#6b7c72;font-size:.88em;font-style:italic;margin-top:2px;border-left:3px solid var(--line);padding-left:8px}
+body.sen .en{display:block}
+.dtg{display:flex;flex-wrap:wrap;align-items:center;gap:4px;background:#f0f7ff;border:1px dashed #9cc3f5;border-radius:12px;padding:8px 10px;margin:4px 0 10px;font-size:12.5px;color:#1d4ed8}
+.dtg b{margin-right:4px}
+.dtg span{background:#fff;border-radius:7px;padding:1px 7px;border:1px solid #dbe8fb}
+.dtg i{font-style:normal;opacity:.5}
+.pg{display:block;width:100%;border-radius:12px;box-shadow:var(--sh);margin:10px 0;background:#fff;cursor:zoom-in}
+details.op{margin-top:16px}
+details.op summary{cursor:pointer;font-weight:800;color:var(--g2);padding:10px 4px}
+#zoom{position:fixed;inset:0;background:rgba(10,20,15,.92);z-index:50;display:none;overflow:auto}
+#zoom img{width:min(1600px,190vw);display:block;margin:0 auto}
+#zoom .x{position:fixed;top:12px;right:12px;width:44px;height:44px;border-radius:50%;background:#fff;font-size:22px;font-weight:900;z-index:51}
+.note{background:var(--y2);border-radius:14px;padding:10px 14px;margin:12px 0 0;font-size:14px;color:#7a5600}
+.sr{background:#fff;border-radius:14px;padding:10px 14px;margin:8px 0;box-shadow:var(--sh)}
+.sr b{color:var(--g2)}
+.sr mark{background:#fff0a8}
+.mobl{display:none}
+@media (max-width:899px){.mobl{display:inline-flex}.main{padding:12px 12px 80px}.bd{padding:10px 14px 14px}.card .hd{padding:12px 14px}}
+.empty{color:var(--mut);padding:30px;text-align:center}
+.say{position:relative;border-radius:10px;transition:background .2s}
+.say.speaking{background:#fff6c9;box-shadow:0 0 0 3px #ffe07a}
+.sb{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:var(--g3);color:var(--g2);font-size:13px;vertical-align:middle;margin-left:6px;flex:none;opacity:.85}
+.sb:hover{opacity:1;background:var(--g);color:#fff}
+.pa{height:32px;padding:0 12px;border-radius:10px;background:var(--g);color:#fff;font-weight:800;font-size:13px;display:inline-flex;align-items:center;gap:4px;flex:none}
+.pa.on{background:#ef4444}
+html.lock #top,html.lock #app{display:none}
+#login{position:fixed;inset:0;z-index:100;display:none;overflow:auto;padding:24px 16px;background:linear-gradient(140deg,var(--g2),var(--g))}
+html.lock #login{display:flex}
+#login form{margin:auto;width:100%;max-width:380px;background:var(--card);border-radius:22px;padding:28px 24px 24px;box-shadow:0 18px 50px rgba(0,40,18,.35);font-size:16px}
+#login .lg{width:60px;height:60px;border-radius:18px;background:var(--y);color:#0a5a2c;display:grid;place-items:center;font-weight:900;font-size:22px;margin:0 auto 12px;box-shadow:inset 0 -4px 0 rgba(0,0,0,.12)}
+#login h1{margin:0;text-align:center;font-size:20px;line-height:1.3}
+#login .lsb{margin:4px 0 20px;text-align:center;color:var(--mut);font-size:13.5px}
+#login label.f{display:block;font-size:13.5px;font-weight:700;color:var(--mut);margin:14px 0 6px}
+#login .in{position:relative}
+#login input[type=text],#login input[type=password]{width:100%;height:48px;border-radius:13px;border:1.5px solid var(--line);background:#fafcfb;padding:0 14px;font:inherit;font-size:16px;color:var(--ink);outline:none}
+#login input[type=text]:focus,#login input[type=password]:focus{border-color:var(--g);background:#fff;box-shadow:0 0 0 3px rgba(15,163,79,.15)}
+#login #lpw{padding-right:74px}
+#login .eye{position:absolute;right:6px;top:6px;height:36px;padding:0 12px;border-radius:9px;background:var(--g3);color:var(--g2);font-size:13.5px;font-weight:700}
+#login .rm{display:flex;align-items:center;gap:8px;margin-top:16px;font-size:14.5px;cursor:pointer;user-select:none}
+#login .rm input{width:19px;height:19px;accent-color:var(--g);flex:none;margin:0}
+#login .er{min-height:22px;margin-top:10px;color:#dc2626;font-size:14px;font-weight:700}
+#login .go{width:100%;height:50px;margin-top:6px;border-radius:14px;background:var(--g);color:#fff;font-size:17px;font-weight:800}
+#login .go:active{transform:scale(.98)}
+</style>
+</head>
+<body>
+<div id="top"><button class="tb" id="bk" style="display:none">‹</button><div class="logo">SIS</div><div class="tt"><b id="tt"></b><small id="ts"></small></div><button class="tb mobl" id="lst" style="display:none">☰</button><button class="tb" id="pall" style="display:none">▶</button><button class="tb" id="vcb"></button><button class="tb" id="fsm">A−</button><button class="tb" id="fsp">A+</button><button class="tb" id="enb" style="display:none">中英</button><button class="tb" id="lgb" style="display:none"></button></div>
+<div id="app"></div>
+<div id="zoom"><button class="x" onclick="zoomOff()">×</button><img id="zi"></div>
+<div id="login"><form id="lf" autocomplete="on" novalidate>
+<div class="lg">SIS</div><h1 id="lh"></h1><div class="lsb" id="ls"></div>
+<label class="f" for="lac" id="l1"></label><div class="in"><input type="text" id="lac" name="username" autocomplete="username" autocapitalize="none" spellcheck="false"></div>
+<label class="f" for="lpw" id="l2"></label><div class="in"><input type="password" id="lpw" name="password" autocomplete="current-password" autocapitalize="none" spellcheck="false"><button type="button" class="eye" id="leye"></button></div>
+<label class="rm"><input type="checkbox" id="lrm"><span id="l3"></span></label>
+<div class="er" id="ler" role="alert"></div>
+<button type="submit" class="go" id="lgo"></button>
+</form></div>
+<script>
+/* 登入：源码只保存帐号密码的 SHA-256 杂凑值，不含明文；勾选「记住」则保存 180 天，否则只在本次浏览有效 */
+(function(){
+const KEY='tmlogin',DAYS=180,HS=["d2b536900c57b3a72b925062ccbe47f4c0986e88aad4a766570789f805804e84","200da9df30dadaeb6eb0b810192d8e713da56d20f921c3b7354e2f75b4cb2b42","dcb1e6bec7a79108cc423600d9fe566561643de379af8e64019fedb8ea6a5a94","e4aa8d6a2d7f0ab0f3f83fc1994fffc28daaa48616010f005d8e2c851ab78e33","4216c7853b75349738a9a53617b23cfcdf361b190c988fd5376d5ead2c149641","4aae246cc58f6470f75d1828e20f5d1016a1615e95373cc6a0aad71f9e363507","2dfe80640d34d3e4c270cb09bd8f4baa8df5475ebe538c83be28ed6268d0e314","310dc6d5349d0a05148f97500cda1da03c3f4560344d5ecc1ba304da5677ef37","5d196a54e0b5f6eb50b49fb3dfc3ecc351608dec643671065f0ed62796fec5a2"];
+function sha(s){const K=[],H=[];let n=2,i=0;const fr=x=>((x-Math.floor(x))*4294967296)|0;
+ for(;i<64;n++){let p=1;for(let d=2;d*d<=n;d++)if(n%d===0){p=0;break}if(p){if(i<8)H[i]=fr(Math.sqrt(n));K[i++]=fr(Math.cbrt(n))}}
+ const b=Array.from(new TextEncoder().encode(s)),L=b.length*8;b.push(128);while(b.length%64!==56)b.push(0);
+ b.push(0,0,0,0,(L>>>24)&255,(L>>>16)&255,(L>>>8)&255,L&255);
+ const r=(x,k)=>(x>>>k)|(x<<(32-k)),w=[];
+ for(let o=0;o<b.length;o+=64){for(i=0;i<16;i++)w[i]=(b[o+i*4]<<24)|(b[o+i*4+1]<<16)|(b[o+i*4+2]<<8)|b[o+i*4+3];
+  for(i=16;i<64;i++){const x=w[i-15],y=w[i-2];w[i]=(w[i-16]+(r(x,7)^r(x,18)^(x>>>3))+w[i-7]+(r(y,17)^r(y,19)^(y>>>10)))|0}
+  let [a,c,d,e,f,g,h,j]=H;
+  for(i=0;i<64;i++){const t1=(j+(r(f,6)^r(f,11)^r(f,25))+((f&g)^(~f&h))+K[i]+w[i])|0,t2=((r(a,2)^r(a,13)^r(a,22))+((a&c)^(a&d)^(c&d)))|0;j=h;h=g;g=f;f=(e+t1)|0;e=d;d=c;c=a;a=(t1+t2)|0}
+  [a,c,d,e,f,g,h,j].forEach((v,k)=>H[k]=(H[k]+v)|0)}
+ return H.map(v=>(v>>>0).toString(16).padStart(8,'0')).join('')}
+const hs=(a,p)=>sha('sis-tm|'+a+'|'+p);
+const rd=s=>{try{const o=JSON.parse(s.getItem(KEY)||'null');if(o&&HS.includes(o.h)&&(!o.exp||o.exp>Date.now()))return o}catch(e){}return null};
+const clr=()=>{try{localStorage.removeItem(KEY)}catch(e){}try{sessionStorage.removeItem(KEY)}catch(e){}};
+let en=false;try{en=localStorage.getItem('tmmode_sc')==='en'}catch(e){}
+const T=en?{h:"See It and Say It · Teacher's Manual",s:'Please sign in',a:'Account',p:'Password',show:'Show',hide:'Hide',rm:'Remember account and password for 180 days',go:'Sign in',e0:'Please enter your account and password',e1:'Incorrect account or password',out:'Sign out',q:'Sign out?'}
+:{h:'See It and Say It 教师手册',s:'请先登录',a:'帐号',p:'密码',show:'显示',hide:'隐藏',rm:'记住帐号密码（180 天）',go:'登录',e0:'请输入帐号和密码',e1:'帐号或密码错误',out:'退出',q:'确定要退出登录吗？'};
+const g=i=>document.getElementById(i),H=document.documentElement;
+g('lh').textContent=T.h;g('ls').textContent=T.s;g('l1').textContent=T.a;g('l2').textContent=T.p;g('l3').textContent=T.rm;g('lgo').textContent=T.go;
+const pw=g('lpw'),ac=g('lac'),eye=g('leye'),er=g('ler');
+const setEye=()=>{const sh=pw.type==='text';eye.textContent=sh?T.hide:T.show;eye.setAttribute('aria-pressed',sh)};setEye();
+eye.onclick=()=>{pw.type=pw.type==='password'?'text':'password';setEye();pw.focus()};
+const lb=document.createElement('button');lb.className='tb';lb.id='lob';lb.textContent=T.out;lb.title=T.out;g('top').appendChild(lb);
+lb.onclick=()=>{if(!confirm(T.q))return;clr();location.reload()};
+let saved=null;try{saved=rd(localStorage)}catch(e){}
+let sess=null;try{sess=rd(sessionStorage)}catch(e){}
+if(!saved){try{localStorage.removeItem(KEY)}catch(e){}}
+if(saved||sess)return;
+H.classList.add('lock');setTimeout(()=>ac.focus(),0);
+[ac,pw].forEach(i=>i.oninput=()=>{er.textContent=''});
+g('lf').onsubmit=e=>{e.preventDefault();const a=ac.value.trim(),p=pw.value;
+ if(!a||!p){er.textContent=T.e0;(a?pw:ac).focus();return}
+ const h=hs(a,p);if(!HS.includes(h)){er.textContent=T.e1;pw.select();pw.focus();return}
+ clr();const o={h:h};
+ try{if(g('lrm').checked){o.exp=Date.now()+DAYS*864e5;localStorage.setItem(KEY,JSON.stringify(o))}else sessionStorage.setItem(KEY,JSON.stringify(o))}catch(x){}
+ pw.value='';pw.type='password';setEye();H.classList.remove('lock');window.scrollTo(0,0)};
+})();
+</script>
+<script>
+const META=[{"id": "S01", "n": 1, "cov": 1.0, "cls": 24, "tp": ["Greetings", "E-H", "Introductions", "I-L"]}, {"id": "S02", "n": 2, "cov": 1.0, "cls": 24, "tp": ["In the Book Shop", "Colors", "Animals at the Zoo", "At the Zoo"]}, {"id": "S03", "n": 3, "cov": 1.0, "cls": 24, "tp": ["It is a test", "Lunch Time!", "Computer Games!", "Baby Frogs!"]}, {"id": "S04", "n": 4, "cov": 1.0, "cls": 24, "tp": ["My Nose is Big", "Meeting Randy and Lily", "Family Tree", "Hello, Randy and Lily"]}, {"id": "S05", "n": 5, "cov": 1.0, "cls": 24, "tp": ["Monsters Are Very", "A Sports Meet", "A Busy Day", "A Sports Meet"]}, {"id": "S06", "n": 6, "cov": 0.999, "cls": 24, "tp": ["At McDonald's a", "It's Christmas!"]}, {"id": "S07", "n": 7, "cov": 1.0, "cls": 24, "tp": ["The Blue Button", "Were you at home?", "On A Picnic", "Activity Chart"]}, {"id": "S08", "n": 8, "cov": 1.0, "cls": 24, "tp": ["Snack Time", "Hiss! It's Fat Cat!", "Do you ever go to", "Why is Teeny"]}, {"id": "S09", "n": 9, "cov": 0.998, "cls": 24, "tp": ["I'm Happier than", "Pete and Tony", "When They Grow", "A Beautiful Country"]}, {"id": "S10", "n": 10, "cov": 1.0, "cls": 24, "tp": ["The Brave Little Bluebird"]}, {"id": "S11", "n": 11, "cov": 0.999, "cls": 24, "tp": ["The first day back at school", "Isn't Rafting Dangerous?", "Exercise", "Leo's secret project"]}, {"id": "S12", "n": 12, "cov": 0.998, "cls": 24, "tp": ["A Day In The Park", "A New Friend", "Exercise", "Can We Help It?"]}];const LANG0='sc';const UZ={"apptitle": "See It and Say It 教师手册", "brand": "教师手册", "sub": "See It and Say It · 共 12 级", "level": "第 {n} 级", "classes": "课", "cls": "课", "clsn": "第 {n} 课", "guide": "教学指引", "course": "每课教案", "appendix": "答案与附录", "back": "返回", "home": "全部级别", "prev": "上一课", "next": "下一课", "goals": "本课目标", "minutes": "分钟", "total": "总时间", "dtg": "数字教学路径", "orig": "原书页面", "showEN": "显示英文原文", "hideEN": "隐藏英文原文", "pending": "本级中文翻译制作中，尚未翻译的段落暂以英文原文显示。", "search": "搜索本级内容…", "noresult": "找不到相关内容", "overview": "本级课程总览", "flow": "上课流程", "font": "字体大小", "pick": "请选择级别", "levels": "共 12 级 · 每级 24 课", "day": {"Review Day": "复习日", "Test Day": "测验日", "Activity Day": "活动日"}, "tapzoom": "点页面可放大", "T": "老师", "S": "学生", "pages": "原书页面", "covtxt": "中文翻译", "readall": "全部朗读", "touch": "触控一体机"};const UE={"apptitle": "See It and Say It · Teacher's Manual", "brand": "Teacher's Manual", "sub": "See It and Say It · 12 Levels", "level": "Level", "classes": "classes", "cls": "Class", "clsn": "Class {n}", "guide": "Teaching Guide", "course": "Lesson Plans", "appendix": "Answers & Appendix", "back": "Back", "home": "All Levels", "prev": "Previous", "next": "Next", "goals": "Class Goals", "minutes": "min", "total": "Total", "dtg": "Digital Teaching Guide", "orig": "Original pages", "showEN": "Show English", "hideEN": "Hide English", "pending": "", "search": "Search this level…", "noresult": "No results", "overview": "Class Overview", "flow": "Class Flow", "font": "Text size", "pick": "Choose a level", "levels": "12 levels · 24 classes each", "day": {"Review Day": "Review Day", "Test Day": "Test Day", "Activity Day": "Activity Day"}, "tapzoom": "Tap a page to zoom", "T": "Teacher", "S": "Student", "pages": "Book pages", "covtxt": "", "readall": "Read all"};let _m='zh';try{_m=localStorage.getItem('tmmode_'+LANG0)||'zh'}catch(e){}const LANG=(LANG0!=='en'&&_m==='en')?'en':LANG0;const U=LANG==='en'?UE:UZ;const ZH=LANG!=='en';document.documentElement.lang=ZH?(LANG0==='sc'?'zh-CN':'zh-TW'):'en';if(!ZH)document.title=UE.apptitle;
+const COLS=['#0fa34f','#0ea5a4','#2f7de1','#6d5ce8','#b04fd6','#e0478a','#ef5b3b','#f08a1c','#d4a70a','#7cb518','#16a37f','#0b84c4'];
+const $=s=>document.querySelector(s);const app=$('#app');
+const esc=s=>(s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const fmt=(s,n)=>s.replace('{n}',n);
+let fs=+(localStorage.tmfs||16);function setFs(){document.documentElement.style.setProperty('--fs',fs+'px');localStorage.tmfs=fs}
+setFs();$('#fsm').onclick=()=>{fs=Math.max(13,fs-1);setFs()};$('#fsp').onclick=()=>{fs=Math.min(24,fs+1);setFs()};
+if(LANG0!=='en'){const g=$('#lgb');g.style.display='';g.textContent=ZH?'EN':'中文';g.title=ZH?'English version':(LANG0==='sc'?'切换中文版':'切換中文版');g.onclick=()=>{try{localStorage.setItem('tmmode_'+LANG0,ZH?'en':'zh')}catch(e){}location.reload()}}
+if(ZH){const b=$('#enb');b.style.display='';b.title=U.showEN;if(localStorage.tmen==='1'){document.body.classList.add('sen');b.classList.add('on')}
+ b.onclick=()=>{const on=document.body.classList.toggle('sen');b.classList.toggle('on',on);localStorage.tmen=on?'1':'0'}}
+const loaded={};function load(v){return new Promise(r=>{if(window.TMD&&TMD[v])return r(TMD[v]);const s=document.createElement('script');s.src='d/'+v+'.js';s.onload=()=>r(TMD[v]);document.head.appendChild(s)})}
+function col(n){return COLS[(n-1)%12]}
+function grad(n){const c=col(n);return `linear-gradient(135deg,${c},${shade(c,-28)})`}
+function shade(h,p){let n=parseInt(h.slice(1),16),r=n>>16,g=n>>8&255,b=n&255;const f=x=>Math.max(0,Math.min(255,Math.round(x+x*p/100)));return '#'+((1<<24)+(f(r)<<16)+(f(g)<<8)+f(b)).toString(16).slice(1)}
+function lvName(n){return ZH?fmt(U.level,n):U.level+' '+n}
+function setTop(t,s,back){$('#tt').textContent=t;$('#ts').textContent=s||'';const b=$('#bk');b.style.display=back?'':'none';b.onclick=()=>{location.hash=back}}
+function fillPages(v){const go=()=>document.querySelectorAll('img[data-k]').forEach(im=>{const d=TMP[v]&&TMP[v][im.dataset.k];if(d)im.src=d;else im.remove()});if(window.TMP&&TMP[v])return go();const s=document.createElement('script');s.src='p/'+v+'.js';s.onload=go;document.head.appendChild(s)}
+function zoom(src){$('#zi').src=src;$('#zoom').style.display='block'}function zoomOff(){$('#zoom').style.display='none'}
+/* text helpers */
+function zt(b){return ZH&&b[2]?b[2]:b[1]}
+function zh1(b){return esc(ZH&&b[2]?b[2]:b[1])}function en1(b){return ZH&&b[2]?`<div class="en">${esc(b[1])}</div>`:''}
+function tx(b){const z=ZH&&b[2];return z?`${esc(b[2])}<div class="en">${esc(b[1])}</div>`:esc(b[1])}
+function mins(t){const m=/\(\s*(\d+)\s*mins?\s*\)/i.exec(t);return m?+m[1]:0}
+function stripM(t){return t.replace(/[（(]\s*\d+\s*(mins?|分鐘|分钟)\s*[)）]/ig,' ').replace(/\s{2,}/g,' ').trim()}
+function bdCls(b){return b==='Review Day'?'rev':b==='Test Day'?'test':'act'}
+function bdg(b){return b?`<span class="bdg b-${bdCls(b)}">${esc(U.day[b]||b)}</span>`:''}
+function spk(s){if(s==='Touchscreen'&&U.touch)s=U.touch;const k=/^T(eacher)?$/.test(s)?'t':/^(S\d*|Ss|Students?|S[A-D])$/.test(s)?'s':/^C$/.test(s)?'c':'';return `<span class="sp ${k}">${esc(s)}</span>`}
+function liParts(t){const m=/^(\(\d+\)|\d{1,2}[\.\)、](?!\d)|\d{1,2}\.\d+|[a-z][\.\)]|●|•|■|◆|-|Step\s*\d+|[A-Z]\))\s*/.exec(t);return m?[m[1].replace(/[\.、]$/,''),t.slice(m[0].length)]:['•',t]}
+function renderBlocks(bl,from,to,opt){let h='';opt=opt||{};
+ for(let i=from;i<to;i++){const b=bl[i];const k=b[0];
+  if(k==='h3')h+=`<h4 class="s3 say hh"><span class="st">${zh1(b)}</span><button class="sb" onclick="sayOne(this)" aria-label="speak">🔊</button>${en1(b)}</h4>`;
+  else if(k==='h2')h+=`<h4 class="s3 say hh" style="font-size:1.1em"><span class="st">${zh1(b)}</span><button class="sb" onclick="sayOne(this)" aria-label="speak">🔊</button>${en1(b)}</h4>`;
+  else if(k==='d')h+=`<div class="dl say">${spk(b[2])}<div class="bb st">${esc(b[1])}</div><button class="sb" onclick="sayOne(this)" aria-label="speak">🔊</button></div>`;
+  else if(k==='li'){const z=ZH&&b[2];const pe=liParts(b[1]);const pz=z?liParts(b[2]):pe;const key=pe[0]===pz[0]?pz[0]:pz[0];
+   h+=`<div class="li say"><span class="k">${esc(key)}</span><div class="v"><span class="st">${esc(z?pz[1]:pe[1])}</span><button class="sb" onclick="sayOne(this)" aria-label="speak">🔊</button>${z?`<div class="en">${esc(b[1])}</div>`:''}</div></div>`}
+  else h+=`<p class="pp say"><span class="st">${zh1(b)}</span><button class="sb" onclick="sayOne(this)" aria-label="speak">🔊</button>${en1(b)}</p>`}
+ return h}
+function guideHTML(g){return `<div class="dtg"><b>💻 ${U.dtg}</b>${g.map(esc).map(x=>`<span>${x}</span>`).join('<i>›</i>')}</div>`}
+
+/* ===== 预录语音 ===== */
+/* 分句與索引鍵：錄音工具（Node）與頁面（瀏覽器）共用同一份，建置時原樣嵌進頁面。不要在兩邊各寫一份。 */
+function sisNorm(t) { return String(t || '').replace(/\s+/g, ' ').trim(); }
+/* 依句號、問號、驚嘆號分句（中英文皆可），收尾的引號括號併入前一句；超過 300 字的再依分號、逗號切。 */
+function sisSplit(t) {
+  var s = sisNorm(t), out = [], cur = '', i, c;
+  for (i = 0; i < s.length; i++) {
+    c = s[i]; cur += c;
+    var end = /[。！？]/.test(c) || (/[.!?]/.test(c) && (i + 1 >= s.length || s[i + 1] === ' ') && !/\d\.$/.test(cur) && !/(^|[^A-Za-z])(Mr|Mrs|Ms|Dr|e\.g|i\.e|vs|etc|No|St)\.$/.test(cur));
+    if (end) { while (i + 1 < s.length && /[”"’'）)\]」』》]/.test(s[i + 1])) cur += s[++i]; out.push(cur); cur = ''; }
+  }
+  if (cur) out.push(cur);
+  var res = [];
+  out.forEach(function (x) {
+    x = x.trim(); if (!x) return;
+    if (x.length <= 300) { res.push(x); return; }
+    var buf = '';
+    x.split(/(?<=[；;，,、：:])/).forEach(function (p) { if (buf && (buf + p).length > 300) { res.push(buf.trim()); buf = ''; } buf += p; });
+    if (buf.trim()) res.push(buf.trim());
+  });
+  return res.filter(function (x) { return /[A-Za-z0-9一-鿿]/.test(x); });
+}
+/* cyrb53 雜湊 → 14 位十六進位，當音檔檔名 */
+function sisKey(str) {
+  var h1 = 0xdeadbeef ^ 7, h2 = 0x41c6ce57 ^ 7, i, ch;
+  for (i = 0; i < str.length; i++) { ch = str.charCodeAt(i); h1 = Math.imul(h1 ^ ch, 2654435761); h2 = Math.imul(h2 ^ ch, 1597334677); }
+  h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507); h1 ^= Math.imul(h2 ^ (h2 >>> 13), 3266489909);
+  h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507); h2 ^= Math.imul(h1 ^ (h1 >>> 13), 3266489909);
+  return ('00000000' + (h2 >>> 0).toString(16)).slice(-8) + ('000000' + ((h1 >>> 0) & 0xffffff).toString(16)).slice(-6);
+}
+
+let VG='f';try{VG=localStorage.getItem('tmvoice')==='m'?'m':'f'}catch(e){}
+let Q=[],QI=0,curBtn=null,playing=false,AU=null,TK=0;
+function sayText(el){const c=el.querySelector('.st')||el;let t='';c.childNodes.forEach(n=>{if(n.nodeType===3)t+=n.textContent;else if(!n.classList||(!n.classList.contains('en')&&!n.classList.contains('sb')&&!n.classList.contains('k')&&!n.classList.contains('sp')))t+=n.textContent});return t.trim()}
+function stopAll(){playing=false;TK++;Q=[];if(AU){AU.onended=AU.onerror=null;try{AU.pause()}catch(e){}AU=null}document.querySelectorAll('.speaking').forEach(e=>e.classList.remove('speaking'));document.querySelectorAll('.pa.on,.tb.on.pl,.sb.on').forEach(b=>{b.classList.remove('on');b.textContent=b.dataset.l||'▶'});const p=$('#pall');if(p){p.textContent='▶';p.classList.remove('on')}}
+function playEls(els,btn){stopAll();Q=els;QI=0;playing=true;curBtn=btn;if(btn){btn.classList.add('on');btn.dataset.l=btn.dataset.l||btn.textContent;btn.textContent='■'}next()}
+function next(){if(!playing)return;const tk=TK;document.querySelectorAll('.speaking').forEach(e=>e.classList.remove('speaking'));
+ if(QI>=Q.length){stopAll();return}const el=Q[QI++];const t=sayText(el);if(!t)return next();
+ el.classList.add('speaking');el.scrollIntoView({behavior:'smooth',block:'center'});
+ const parts=sisSplit(t);let k=0;const gap=el.classList.contains('hh')?500:250;
+ const go=()=>{if(!playing||tk!==TK)return;if(k>=parts.length){setTimeout(()=>{if(tk===TK)next()},gap);return}
+  const key=sisKey(parts[k++]);const au=new Audio('audio/'+VG+'/'+key.slice(0,2)+'/'+key+'.mp3');AU=au;let once=false;const step=d=>{if(once)return;once=true;setTimeout(go,d)};
+  au.onended=()=>step(140);au.onerror=()=>step(0);const p=au.play();if(p&&p.catch)p.catch(()=>step(0))};
+ go()}
+function sayOne(btn){const el=btn.closest('.say');if(btn.classList.contains('on')){stopAll();return}playEls([el],btn)}
+function sayCard(btn){if(btn.classList.contains('on')){stopAll();return}const c=btn.closest('.card');playEls([...c.querySelectorAll('.say')],btn)}
+(function(){const b=$('#vcb');if(!b)return;const lab=()=>{b.textContent=ZH?(VG==='f'?'女声':'男声'):(VG==='f'?'Female':'Male');b.title=ZH?'切换女老师／男老师的声音':'Switch between female and male teacher voice'};lab();b.onclick=()=>{stopAll();VG=VG==='f'?'m':'f';try{localStorage.setItem('tmvoice',VG)}catch(e){}lab()}})();
+addEventListener('hashchange',stopAll);
+
+/* views */
+function home(){setTop(U.brand,U.sub,'');$('#lst').style.display='none';
+ let h=`<div class="hero"><h1>See It and Say It<br>${esc(U.brand)}</h1><p>${esc(U.levels)}</p><div class="big">S1–12</div></div><div class="grid">`;
+ for(const m of META){const tp=m.tp.slice(0,3).join(' · ');
+  h+=`<a class="lv" href="#/${m.id}" style="background:${grad(m.n)}"><div class="n">S<small></small>${m.n}</div><div class="l">${esc(lvName(m.n))} · ${m.cls} ${esc(U.classes)}</div><div class="ltp">${esc(tp)}</div>${ZH?`<div class="cv"><i style="width:${Math.round(m.cov*100)}%"></i></div><div class="ct">${U.covtxt} ${Math.round(m.cov*100)}%</div>`:''}</a>`}
+ app.innerHTML=h+'</div>';scrollTo(0,0)}
+function secTitle(s){return ZH&&s.z?s.z:s.t}
+function sideHTML(v,S,cur){const n=+v.slice(1);let h=`<div class="srch"><input id="q" placeholder="${esc(U.search)}"></div>`;
+ const fr=S.map((s,i)=>[s,i]).filter(([s])=>s.k!=='class'&&!/answer|script|names list|summar|scope/i.test(s.t));
+ const cl=S.map((s,i)=>[s,i]).filter(([s])=>s.k==='class');
+ const ap=S.map((s,i)=>[s,i]).filter(([s])=>s.k!=='class'&&/answer|script|names list|summar|scope/i.test(s.t));
+ const it=([s,i],no)=>`<a class="si ${cur===i?'on':''}" href="#/${v}/${i}"><span class="no">${no}</span><span class="tx">${esc(secTitle(s))}${s.tp&&s.tp.length?`<small>${esc(s.tp.join(' · '))}</small>`:''}</span>${s.bd?`<span class="dot d-${bdCls(s.bd)}"></span>`:''}</a>`;
+ h+=`<a class="si ${cur===-1?'on':''}" href="#/${v}"><span class="no">★</span><span class="tx">${esc(U.overview)}</span></a>`;
+ h+=`<h4>${esc(U.guide)}</h4>`+fr.map(x=>it(x,'📘')).join('');
+ h+=`<h4>${esc(U.course)}</h4>`+cl.map(x=>it(x,(/\d+/.exec(x[0].t)||[''])[0])).join('');
+ h+=`<h4>${esc(U.appendix)}</h4>`+ap.map(x=>it(x,'📄')).join('');return h}
+function clsTitle(s){const n=(/\d+/.exec(s.t)||[''])[0];return ZH?fmt(U.clsn,n):s.t}
+async function vol(v,si,mode){const S=await load(v);const n=+v.slice(1);
+ $('#lst').style.display='';$('#lst').onclick=()=>{location.hash='#/'+v+'/list'};
+ const list=mode==='list';
+ app.innerHTML=`<div class="vol ${list?'list':''}"><nav class="side">${sideHTML(v,S,si)}</nav><main class="main" id="mn"></main></div>`;
+ const q=$('#q');q.onkeydown=e=>{if(e.key==='Enter'&&q.value.trim())location.hash='#/'+v+'/s/'+encodeURIComponent(q.value.trim())};
+ const mn=$('#mn');
+ if(list){setTop('S'+n+' · '+lvName(n),U.pick,'#/'+v);return}
+ if(mode==='search'){searchView(v,S,si);return}
+ if(si===-1){setTop('S'+n+' · '+lvName(n),U.sub,'#/');mn.innerHTML=overview(v,S,n);}
+ else{const s=S[si];setTop(s.k==='class'?clsTitle(s)+' · S'+n:secTitle(s),'S'+n+' · '+lvName(n),'#/'+v);
+  mn.innerHTML=s.k==='class'?classView(v,S,si,n):textView(v,s,n)}
+ setTimeout(setPall,0);
+ const a=document.querySelector('.si.on');if(a&&innerWidth>=900)a.scrollIntoView({block:'center'});
+ scrollTo(0,0)}
+function overview(v,S,n){const cov=META.find(m=>m.id===v).cov;
+ let h=`<div class="vh" style="background:${grad(n)}"><h2>S${n} · ${esc(lvName(n))}</h2><p>See It and Say It · ${esc(U.brand)}</p><div class="big">S${n}</div></div>`;
+ if(ZH&&cov<0.99)h+=`<div class="note">${esc(U.pending)}</div>`;
+ h+=`<div class="sh2">${esc(U.course)}</div><div class="cg">`;
+ S.forEach((s,i)=>{if(s.k!=='class')return;const no=(/\d+/.exec(s.t)||[''])[0];
+  h+=`<a class="cc" href="#/${v}/${i}"><div class="h"><span class="num" style="background:${grad(n)}">${no}</span><div class="ti">${esc(clsTitle(s))}<small>${s.m?s.m+' '+U.minutes:''}</small></div></div>${s.bd?`<div>${bdg(s.bd)}</div>`:''}<div class="tps">${esc(s.tp.join(' · '))}</div></a>`});
+ h+='</div>';
+ const oth=S.map((s,i)=>[s,i]).filter(([s])=>s.k!=='class');
+ h+=`<div class="sh2">${esc(U.guide)} · ${esc(U.appendix)}</div><div class="gl">`+oth.map(([s,i])=>`<a class="gi" href="#/${v}/${i}"><i>${s.k==='img'?'📄':'📘'}</i>${esc(secTitle(s))}</a>`).join('')+'</div>';
+ return h}
+const SC=['#0fa34f','#2f7de1','#f08a1c','#8b5cf6','#e0478a','#0ea5a4','#d4a70a','#ef5b3b'];
+function classView(v,S,si,n){const s=S[si],bl=s.b;const no=(/\d+/.exec(s.t)||[''])[0];
+ const ci=S.map((x,i)=>[x,i]).filter(([x])=>x.k==='class').map(x=>x[1]);const p=ci.indexOf(si);
+ let h=`<div class="ch"><div class="num" style="background:${grad(n)}">${no}</div><div class="inf"><h2>${esc(clsTitle(s))}${ZH?` <span style="font-size:.6em;color:var(--mut)">${esc(s.t)}</span>`:''}</h2><div class="tps">${bdg(s.bd)}${s.tp.map(t=>`<span class="chip">${esc(t)}</span>`).join('')}${s.m?`<span class="chip" style="background:var(--g3);color:var(--g2)">⏱ ${U.total} ${s.m} ${U.minutes}</span>`:''}</div></div><div class="nav2"><a class="nb" ${p>0?`href="#/${v}/${ci[p-1]}"`:'disabled'}>‹ ${esc(U.prev)}</a><a class="nb" ${p<ci.length-1?`href="#/${v}/${ci[p+1]}"`:'disabled'}>${esc(U.next)} ›</a></div></div>`;
+ // goals
+ const gEnd=bl.findIndex(b=>!b[3]);const ge=gEnd<0?bl.length:gEnd;
+ const h2s=[];bl.forEach((b,i)=>{if(b[0]==='h2'&&i>=ge)h2s.push(i)});const fl=h2s.filter(i=>mins(bl[i][1]));
+ if(fl.length>1){const tot=fl.reduce((a,i)=>a+(mins(bl[i][1])||0),0);
+  h+=`<div class="flow">`+fl.map((i,k)=>{const m=mins(bl[i][1]);return `<button style="background:${SC[k%SC.length]};flex-grow:${m||Math.max(4,tot/h2s.length/2)}" onclick="document.getElementById('h${i}').scrollIntoView({behavior:'smooth',block:'start'})">${esc(stripM(zt(bl[i])))}${m?`<small>${m} ${U.minutes}</small>`:''}</button>`}).join('')+`</div>`}
+ if(ge>0){h+=`<div class="card"><div class="hd"><span class="ic" style="background:var(--y);color:#6b4b00">🎯</span><h3>${esc(U.goals)}</h3><button class="pa" onclick="sayCard(this)">▶ ${esc(U.readall)}</button></div><div class="bd"><div class="goal">`;
+  let i=0;const fields=[];let cur=null;
+  for(;i<ge;i++){const b=bl[i];if(b[0]==='h3'||b[0]==='h2'){cur={l:b,v:[]};fields.push(cur)}else{if(!cur){cur={l:null,v:[]};fields.push(cur)}cur.v.push(b)}}
+  for(let q=0;q<fields.length-1;q++){if(!fields[q].v.length&&fields[q].l){const a=fields[q].l,b=fields[q+1];if(b.l){b.pre=(fields[q].pre?fields[q].pre+' · ':'')+zt(a);fields[q].skip=1}}}
+  for(const f of fields){if(f.skip)continue;h+=`<div class="gf">${f.pre?`<div class="lb" style="opacity:.7">${esc(f.pre)}</div>`:''}${f.l?`<div class="lb say hh"><span class="st">${zh1(f.l)}</span></div>`:''}<div class="vv">${renderGoalVals(f.v)}</div></div>`}
+  h+=`</div></div></div>`}
+ // sections
+ const gmap={};s.g.forEach(([t,g])=>{(gmap[t]=gmap[t]||[]).push(g)});
+ const starts=h2s.length?h2s:[ge];
+ if(ge<starts[0]&&starts[0]>ge)starts.unshift(ge);
+ starts.forEach((st,k)=>{const en=k+1<starts.length?starts[k+1]:bl.length;const b=bl[st];const isH=b&&b[0]==='h2';
+  const m=isH?mins(b[1]):0;const ttl=isH?stripM(zt(b)):'';const col=SC[(h2s.indexOf(st))%SC.length]||'#0fa34f';
+  h+=`<div class="card" id="h${st}"><div class="hd"><span class="ic" style="background:${col}">${k+1}</span><h3 class="say hh"><span class="st">${esc(ttl)}</span>${isH&&ZH&&b[2]?`<small>${esc(stripM(b[1]))}</small>`:''}</h3>${m?`<span class="tp">${m} ${U.minutes}</span>`:''}<button class="pa" onclick="sayCard(this)">▶ ${esc(U.readall)}</button></div><div class="bd">`;
+  (gmap[st]||[]).forEach(g=>h+=guideHTML(g));
+  h+=renderBlocks(bl,isH?st+1:st,en)+`</div></div>`});
+ h+=`<div class="ch" style="margin-top:16px;justify-content:space-between"><div class="nav2"><a class="nb" ${p>0?`href="#/${v}/${ci[p-1]}"`:'disabled'}>‹ ${esc(U.prev)}</a></div><div class="nav2"><a class="nb" ${p<ci.length-1?`href="#/${v}/${ci[p+1]}"`:'disabled'}>${esc(U.next)} ›</a></div></div>`;
+ return h}
+function renderGoalVals(vs){let h='';for(const b of vs){if(b[0]==='d')h+=`<div class="dl say">${spk(b[2])}<div class="bb st">${esc(b[1])}</div><button class="sb" onclick="sayOne(this)" aria-label="speak">🔊</button></div>`;else if(b[0]==='li'){const z=ZH&&b[2];const t=liParts(z?b[2]:b[1]);h+=`<p class="say">• <span class="st">${esc(t[1])}</span><button class="sb" onclick="sayOne(this)" aria-label="speak">🔊</button>${z?`<span class="en">${esc(b[1])}</span>`:''}</p>`}else h+=`<p class="say"><span class="st">${zh1(b)}</span><button class="sb" onclick="sayOne(this)" aria-label="speak">🔊</button>${en1(b)}</p>`}return h}
+function textView(v,s,n){let h=`<div class="ch"><div class="num" style="background:${grad(n)};font-size:24px">${s.k==='img'?'📄':'📘'}</div><div class="inf"><h2>${esc(secTitle(s))}</h2>${ZH&&s.z?`<div class="min">${esc(s.t)}</div>`:''}</div></div>`;
+ const pages=s.p.map(p=>String(p).padStart(3,'0'));
+ if(s.k==='img'){h+=`<div class="note">${esc(U.tapzoom)}</div>`+pages.map(k=>`<img class="pg" data-k="${k}" onclick="zoom(this.src)">`).join('');setTimeout(()=>fillPages(v),0);return h}
+ const bl=s.b;const gm={};s.g.forEach(([t,g])=>{(gm[t]=gm[t]||[]).push(g)});
+ const hs=[];bl.forEach((b,i)=>{if(b[0]==='h2')hs.push(i)});if(!hs.length||hs[0]>0)hs.unshift(0);
+ hs.forEach((st,k)=>{const en=k+1<hs.length?hs[k+1]:bl.length;const b=bl[st];const isH=b&&b[0]==='h2';
+  h+=`<div class="card">${isH?`<div class="hd"><span class="ic" style="background:${SC[k%SC.length]}">${k+1}</span><h3 class="say hh"><span class="st">${esc(zt(b))}</span>${ZH&&b[2]?`<small>${esc(b[1])}</small>`:''}</h3><button class="pa" onclick="sayCard(this)">▶ ${esc(U.readall)}</button></div>`:`<div class="hd" style="justify-content:flex-end;border:0;padding-bottom:0"><button class="pa" onclick="sayCard(this)">▶ ${esc(U.readall)}</button></div>`}<div class="bd">`;
+  (gm[st]||[]).forEach(g=>h+=guideHTML(g));
+  h+=renderBlocks(bl,isH?st+1:st,en)+`</div></div>`});
+ if(/Grammar|Learning|Phonics/i.test(s.t))h+=`<details class="op"><summary>📄 ${esc(U.orig)}</summary>${pages.map(k=>`<img class="pg" data-k="${k}" onclick="zoom(this.src)">`).join('')}</details>`;
+ setTimeout(()=>fillPages(v),0);
+ return h}
+function searchView(v,S,q){const n=+v.slice(1);q=decodeURIComponent(q);setTop(q,'S'+n+' · '+lvName(n),'#/'+v);$('#q').value=q;
+ const ql=q.toLowerCase();let h='',c=0;
+ S.forEach((s,i)=>{s.b.forEach(b=>{const a=(b[1]||''),z=(b[0]!=='d'&&b[2])||'';const t=(ZH&&z?z:a);
+  if(c<200&&(a.toLowerCase().includes(ql)||z.toLowerCase().includes(ql))){c++;const src=z&&z.toLowerCase().includes(ql)?z:a;const j=src.toLowerCase().indexOf(ql);const sn=src.slice(Math.max(0,j-50),j+90);
+   h+=`<a class="sr" style="display:block" href="#/${v}/${i}"><b>${esc(s.k==='class'?clsTitle(s):secTitle(s))}</b><div>${esc(sn).replace(new RegExp(q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),'ig'),m=>`<mark>${m}</mark>`)}</div></a>`}})});
+ $('#mn').innerHTML=h||`<div class="empty">${esc(U.noresult)}</div>`;scrollTo(0,0)}
+function setPall(){const p=$('#pall');const has=!!document.querySelector('#mn .say');p.style.display=has?'':'none';p.title=U.readall;p.onclick=()=>{if(p.classList.contains('on')){stopAll();return}playEls([...document.querySelectorAll('#mn .say')],null);p.classList.add('on');p.textContent='■'}}
+function route(){const h=location.hash.replace(/^#\/?/,'').split('/');
+ if(!h[0])return home();const v=h[0];
+ if(h[1]==='list')return vol(v,-1,'list');
+ if(h[1]==='s')return vol(v,h.slice(2).join('/'),'search');
+ vol(v,h[1]!==undefined&&h[1]!==''?+h[1]:-1)}
+addEventListener('hashchange',()=>{route();setTimeout(setPall,400)});route();setTimeout(setPall,600);
+</script>
+</body>
+</html>

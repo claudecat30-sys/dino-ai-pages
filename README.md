@@ -12,6 +12,7 @@
 | `pinyin-intro/` | 迪诺玩拼音看世界(中英双语版) · 功能介绍(簡體、大陸讀音、預錄語音) | 2026-11-17 | `https://claudecat30-sys.github.io/dino-ai-pages/pinyin-intro/` |
 | `basic-geometry-intro/` | DINO AI 數學 · 基礎幾何 · 功能介紹(繁體 `index.html`、简体 `cn.html`,預錄語音) | 2026-11-18 | `https://claudecat30-sys.github.io/dino-ai-pages/basic-geometry-intro/` |
 | `word-hunt-intro/` | 迪諾文字大尋寶 · 特色介紹(繁體、简体、英文、日文共六頁,預錄語音) | 2026-11-25 | `https://claudecat30-sys.github.io/dino-ai-pages/word-hunt-intro/` |
+| `sis-teacher-manual-sc/` | See It and Say It 教师手册(简中英,共 12 级;需登入;预录语音尚未上传) | 2026-11-26 | `https://claudecat30-sys.github.io/dino-ai-pages/sis-teacher-manual-sc/` |
 
 ## 發布設定
 
@@ -121,3 +122,9 @@
 - 頁面沒有對外連結,也不依賴其他網站或儲存庫。
 - iPhone / iPad:**尚未在實機上測試。**
 - 音檔沒有逐句人工試聽;句尾一聲下墜沒有量測。
+
+## sis-teacher-manual-sc
+
+- `index.html`:手冊本體(简体中文,可切換英文)。`d/`:12 級的教案內容。`p/`:12 級的原書頁面圖。三者必須在同一層。
+- 開啟時先顯示登入畫面。頁面原始碼只存帳號密碼的 SHA-256 雜湊值,不含明文;勾選「记住帐号密码」會在該瀏覽器保留 180 天。這只是前端門檻:`d/`、`p/` 的內容在這個公開儲存庫裡仍可直接讀取。
+- **預錄語音(`audio/`)尚未上傳**:全部約 1.8 GB,超過本儲存庫 1 GB 的上限,因此線上版的朗讀按鈕目前沒有聲音。
