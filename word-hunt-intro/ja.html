@@ -32,7 +32,7 @@ button{font-family:inherit;cursor:pointer;border:0}
 #sub b.L{color:#ffb6dc}#sub b.D{color:#a8f0c6}#sub b.B{color:#ffe08a}
 #ttl{position:absolute;left:2%;top:2.5%;font-weight:900;color:#fff;text-shadow:0 0 .3em #8a2d76,0 .08em .1em #8a2d76;transition:all .6s ease;white-space:nowrap}
 #ttl small{display:block;font-size:.55em;color:#ffe08a}
-#ttl.big{left:50%;top:40%;transform:translate(-50%,-50%) scale(1.9);text-align:center}
+#ttl.big{left:50%;top:40%;transform:translate(-50%,-50%) scale(1.9);text-align:center;width:max-content;text-wrap:balance;word-break:keep-all}#ttl.big .tr{width:0;min-width:100%;word-break:normal}
 #ctl{position:absolute;right:1.5%;bottom:2%;display:flex;gap:.8vmin;opacity:.75;z-index:5}
 #ctl button{width:6vmin;height:6vmin;min-width:34px;min-height:34px;border-radius:50%;background:rgba(255,255,255,.85);font-size:2.6vmin;color:#7a3d8c;box-shadow:0 .3vmin .8vmin rgba(0,0,0,.2)}
 #ctl button.on{background:#ffe08a;color:#a0461a}
@@ -123,6 +123,8 @@ function say(t,who){const a=AUD[U.lang+"|"+who+"|"+t];return a?playA(a):quiet(t,
 function chunks(t){const parts=JA?t.match(/[^、。！？…]+[、。！？…」』]*/g)||[t]:ZH?t.match(/[^，。！？；：…]+[，。！？；：…」』]*/g)||[t]:t.match(/(?:[^,.!?;:]|,(?=[0-9]))+[,.!?;:]*["”]?/g)||[t];
  const out=[];const MX=JA?26:ZH?20:72;let cur="";for(let p of parts){p=p.trim();if(!p)continue;if(cur&&(cur+p).length>MX){out.push(cur);cur=p}else cur=cur?(ZH?cur+p:cur+" "+p):p}if(cur)out.push(cur);return out}
 /* ---------- layout ---------- */
+const TBR={"ランドの大きな宝物":"ランドの|大きな宝物","一つ一つの字が宝物":"一つ一つの字が|宝物","中国語と日本語をいっしょに":"中国語と日本語を|いっしょに","五十四のテーマゲーム":"五十四の|テーマゲーム","声に出して読もう":"声に出して|読もう","本格的なテスト":"本格的な|テスト","まちがえた字は一つものがさない":"まちがえた字は|一つものがさない","いつでもどこでも学べる":"いつでもどこでも|学べる"};function ttlH(t){return(TBR[t]||t).split("|").join("<wbr>")}
+function fitTtl(){const t=$("ttl"),s=t.style;s.transition="none";s.whiteSpace=s.maxWidth="";if(t.classList.contains("big")){const W=$("stage").clientWidth*0.94;let k=Math.min(1.9,W/t.offsetWidth);if(k<1.45){k=1.45;s.whiteSpace="normal";s.maxWidth=W/k+"px";if(t.scrollWidth>t.clientWidth+1){s.whiteSpace=s.maxWidth="";k=W/t.offsetWidth}}s.transform="translate(-50%,-50%) scale("+k*0.85+")";void t.offsetWidth;s.transition="";s.transform="translate(-50%,-50%) scale("+k+")"}else{s.transform="";const W=$("stage").clientWidth*0.96;if(t.offsetWidth>W){s.whiteSpace="normal";s.maxWidth=W+"px"}void t.offsetWidth;s.transition=""}}
 let LAND=true;
 function layout(){const W=innerWidth,H=innerHeight;LAND=W>=H;const ar=LAND?16/9:9/16;let w=W,h=W/ar;if(h>H){h=H;w=H*ar}
  const st=$("stage");st.style.width=w+"px";st.style.height=h+"px";st.style.backgroundImage=`url(${IMG[LAND?"I05":"I06"]})`;$("blur").style.backgroundImage=`url(${IMG[LAND?"I05b":"I06b"]})`;
@@ -131,7 +133,7 @@ function layout(){const W=innerWidth,H=innerHeight;LAND=W>=H;const ar=LAND?16/9:
  if(LAND){Object.assign(L,{left:"2%",height:"46%",bottom:"5%"});Object.assign(Dd,{left:"19%",height:"48%",bottom:"4%"})}else{Object.assign(L,{left:"4%",height:"25%",bottom:"3%"});Object.assign(Dd,{left:"50%",height:"26%",bottom:"2.5%"})}
  const s=$("sub").style;const fs=(LAND?h*0.052:w*0.062);s.fontSize=fs+"px";
  if(LAND)Object.assign(s,{left:"37%",right:"2%",top:"auto",bottom:"7%"});else Object.assign(s,{left:"4%",right:"4%",top:"55%",bottom:"auto"});
- $("ttl").style.fontSize=(LAND?h*0.042:w*0.05)+"px";
+ $("ttl").style.fontSize=(LAND?h*0.042:w*0.05)+"px";fitTtl();
  if(!started)$("start").style.backgroundImage=`url(${IMG[LAND?"I01":"I02"]})`;
  setScene(curScene)}
 addEventListener("resize",layout);
@@ -150,8 +152,8 @@ function dots(){$("dots").innerHTML=SEGS.map((s,i)=>`<i class="${i===si?"on":""}
 async function playFrom(i){const id=++run;idle=false;ended=false;stopAll();paused=false;$("bPlay").textContent="⏸";
  for(si=i;si<SEGS.length;si++){if(id!==run)return;dots();const sg=SEGS[si];preSeg(si);preSeg(si+1);
   pic(sg.pics[0]);$("cL").querySelector("img").src=IMG.l_ask;$("cD").querySelector("img").src=IMG.d_intro;talk("");
-  const tt=$("ttl");tt.innerHTML=`<small>${U.part.replace("{n}",si+1)}</small>${sg.t}<span class="tr">${sg.tt}</span>`;tt.classList.add("big");$("sub").innerHTML="";
-  await say(sg.t,"N");await sleep(500);tt.classList.remove("big");await sleep(500);if(id!==run)return;
+  const tt=$("ttl");tt.innerHTML=`<small>${U.part.replace("{n}",si+1)}</small>${ttlH(sg.t)}<span class="tr">${sg.tt}</span>`;tt.classList.add("big");fitTtl();$("sub").innerHTML="";
+  await say(sg.t,"N");await sleep(500);tt.classList.remove("big");fitTtl();await sleep(500);if(id!==run)return;
   for(const ln of sg.lines){await waitPause(id);if(id!==run)return;
    if(!ln.c)pic(sg.pics[ln.i]||sg.pics[0]);
    if(ln.w==="B"){pose("L","l_yay");pose("D","d_bye")}else pose(ln.w,ln.p);talk(ln.w);
